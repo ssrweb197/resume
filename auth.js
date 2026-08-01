@@ -46,11 +46,34 @@ if (logoutBtn) {
 }
 
 onAuthStateChanged(auth, async (user) => {
-  if (!user) return;
 
-  const snap = await getDoc(doc(db, "users", user.uid));
+  const userName = document.getElementById("userName");
 
-  if (snap.exists()) {
-    console.log("User Found:", snap.data());
+  if (user) {
+
+    loginBtn.style.display = "none";
+    logoutBtn.style.display = "inline-block";
+
+    if (userName) {
+      userName.textContent = user.displayName;
+      userName.style.display = "inline";
+    }
+
+    const snap = await getDoc(doc(db, "users", user.uid));
+
+    if (snap.exists()) {
+      console.log("User Found:", snap.data());
+    }
+
+  } else {
+
+    loginBtn.style.display = "inline-block";
+    logoutBtn.style.display = "none";
+
+    if (userName) {
+      userName.textContent = "";
+    }
+
   }
+
 });
