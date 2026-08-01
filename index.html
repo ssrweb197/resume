@@ -63,8 +63,21 @@
       </nav>
 
       <div class="nav-actions">
-        <button class="btn btn-outline" onclick="switchPage('dashboard')">Dashboard</button>
-        <button class="btn btn-primary" onclick="switchPage('builder')">Create Resume</button>
+        <div class="nav-actions">
+
+    <button id="googleLogin" class="btn btn-outline">
+        Continue with Google
+    </button>
+
+    <button id="logout" class="btn btn-outline" style="display:none;">
+        Logout
+    </button>
+
+    <button class="btn btn-primary" onclick="switchPage('builder')">
+        Create Resume
+    </button>
+
+</div>
         <button class="mobile-toggle" id="mobileMenuBtn"><i data-lucide="menu"></i></button>
       </div>
     </div>
