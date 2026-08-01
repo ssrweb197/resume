@@ -203,3 +203,10 @@ function runATSCheck() {
     </div>
   `;
 }
+  // Make functions available globally
+window.switchPage = switchPage;
+window.setBuilderStep = setBuilderStep;
+window.updateResumeState = updateResumeState;
+window.triggerAISummary = triggerAISummary;
+window.exportPDF = exportPDF;
+window.runATSCheck = runATSCheck;
