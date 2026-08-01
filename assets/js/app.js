@@ -1,3 +1,10 @@
+ import { auth, db } from "../../firebase-config.js";
+
+import {
+  doc,
+  setDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 /**
  * BRANDBLITZ RESUME AI - CORE APPLICATION LOGIC
  * Handlers: Router, Live Synchronized State Engine, ATS Scanner, & PDF Exporter
