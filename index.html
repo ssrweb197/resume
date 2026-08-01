@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BrandBlitz Resume AI — Build ATS-Friendly Resumes in Minutes</title>
+  <meta name="description" content="Build job-winning, ATS-optimized resumes with AI in minutes. Professional templates, AI summary writer, cover letter generator, and live ATS checker.">
+  <meta name="keywords" content="AI resume builder, ATS resume checker, cover letter generator, professional CV templates, BrandBlitz">
+  
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="BrandBlitz Resume AI — ATS-Friendly AI Resume Builder">
+  <meta property="og:description" content="Create a world-class, job-winning resume with AI assistance and instant ATS optimization.">
+  <meta property="og:image" content="assets/images/og-preview.jpg">
+  
+  <!-- Schema.org Markup -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "BrandBlitz Resume AI",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "INR"
+    }
+  }
+  </script>
+
+  <link rel="stylesheet" href="assets/css/style.css">
+  <!-- Lucide Icons CDN for visual elements -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar glass-header">
+    <div class="nav-container">
+      <a href="#" class="brand-logo" onclick="switchPage('home')">
+        <div class="logo-icon"><i data-lucide="sparkles"></i></div>
+        <span class="logo-text">BrandBlitz<span class="logo-accent">.AI</span></span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#home" class="nav-link active" onclick="switchPage('home')">Home</a>
+        <a href="#builder" class="nav-link" onclick="switchPage('builder')">Resume Builder</a>
+        <a href="#templates" class="nav-link" onclick="switchPage('templates')">Templates</a>
+        <a href="#ats-checker" class="nav-link" onclick="switchPage('ats-checker')">ATS Checker</a>
+        <a href="#pricing" class="nav-link" onclick="switchPage('pricing')">Pricing</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="btn btn-outline" onclick="switchPage('dashboard')">Dashboard</button>
+        <button class="btn btn-primary" onclick="switchPage('builder')">Create Resume</button>
+        <button class="mobile-toggle" id="mobileMenuBtn"><i data-lucide="menu"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main id="app">
+
+    <!-- PAGE 1: HOME -->
+    <section id="page-home" class="page-section active">
+      <!-- Hero Section -->
+      <div class="hero-section">
+        <div class="hero-content">
+          <div class="badge-pill">
+            <i data-lucide="zap"></i> Next-Gen AI Resume Engine 2.0
+          </div>
+          <h1 class="hero-title">Create a Professional <span class="gradient-text">ATS-Friendly Resume</span> in Minutes</h1>
+          <p class="hero-subtitle">Build a job-winning resume with AI. Powered by automated formatting, smart keyword insertion, and real-time ATS scoring.</p>
+
+          <div class="hero-cta-group">
+            <button class="btn btn-primary btn-lg" onclick="switchPage('builder')">
+              <i data-lucide="file-plus"></i> Create Resume Now
+            </button>
+            <button class="btn btn-secondary btn-lg" onclick="switchPage('templates')">
+              <i data-lucide="layout"></i> View Templates
+            </button>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat-item">
+              <span class="stat-number">98%</span>
+              <span class="stat-label">ATS Pass Rate</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-number">250k+</span>
+              <span class="stat-label">Resumes Generated</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-number">3.5x</span>
+              <span class="stat-label">More Interview Invites</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Features Section -->
+      <div class="container section-padding">
+        <div class="section-header center">
+          <h2>Everything You Need to Land the Interview</h2>
+          <p>Powered by intelligent design and strict ATS compliance standards.</p>
+        </div>
+
+        <div class="grid grid-3">
+          <div class="card feature-card">
+            <div class="feature-icon"><i data-lucide="cpu"></i></div>
+            <h3>AI Summary & Bullets</h3>
+            <p>Generate quantifiable, punchy action statements and tailored summary paragraphs in seconds.</p>
+          </div>
+
+          <div class="card feature-card">
+            <div class="feature-icon"><i data-lucide="check-circle-2"></i></div>
+            <h3>Real-Time ATS Checker</h3>
+            <p>Compare your resume directly against targeted job descriptions to eliminate hiring parser errors.</p>
+          </div>
+
+          <div class="card feature-card">
+            <div class="feature-icon"><i data-lucide="file-text"></i></div>
+            <h3>Smart Cover Letters</h3>
+            <p>Instantly align cover letter tone with targeted job roles while emphasizing key career wins.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pricing Preview -->
+      <div class="container section-padding">
+        <div class="section-header center">
+          <h2>Simple, Transparent Pricing</h2>
+          <p>Invest in your career with affordable, high-impact plans.</p>
+        </div>
+
+        <div class="grid grid-3 pricing-grid">
+          <div class="card pricing-card">
+            <div class="pricing-header">
+              <h3>Free Plan</h3>
+              <div class="price">₹0</div>
+              <p>Ideal for quick fixes</p>
+            </div>
+            <ul class="pricing-features">
+              <li><i data-lucide="check"></i> 1 Basic Resume</li>
+              <li><i data-lucide="check"></i> 3 PDF Downloads</li>
+              <li><i data-lucide="check"></i> Basic Formatting</li>
+            </ul>
+            <button class="btn btn-outline full-width" onclick="switchPage('builder')">Get Started</button>
+          </div>
+
+          <div class="card pricing-card featured">
+            <div class="badge-featured">Most Popular</div>
+            <div class="pricing-header">
+              <h3>Pro Monthly</h3>
+              <div class="price">₹199 <span>/mo</span></div>
+              <p>Full suite AI tools</p>
+            </div>
+            <ul class="pricing-features">
+              <li><i data-lucide="check"></i> Unlimited Downloads</li>
+              <li><i data-lucide="check"></i> Premium Templates</li>
+              <li><i data-lucide="check"></i> AI Content Writer</li>
+              <li><i data-lucide="check"></i> Full ATS Keyword Scanner</li>
+            </ul>
+            <button class="btn btn-primary full-width" onclick="switchPage('builder')">Start Pro Trial</button>
+          </div>
+
+          <div class="card pricing-card">
+            <div class="pricing-header">
+              <h3>Lifetime</h3>
+              <div class="price">₹999 <span>one-time</span></div>
+              <p>Career-long access</p>
+            </div>
+            <ul class="pricing-features">
+              <li><i data-lucide="check"></i> All Pro Features Forever</li>
+              <li><i data-lucide="check"></i> Priority Template Updates</li>
+              <li><i data-lucide="check"></i> 1-on-1 Resume Review Discount</li>
+            </ul>
+            <button class="btn btn-outline full-width" onclick="switchPage('builder')">Buy Lifetime</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 2: RESUME BUILDER -->
+    <section id="page-builder" class="page-section">
+      <div class="builder-layout">
+        <!-- Input Form Section -->
+        <div class="builder-sidebar">
+          <div class="builder-tabs">
+            <button class="b-tab active" onclick="setBuilderStep(1)">Personal</button>
+            <button class="b-tab" onclick="setBuilderStep(2)">Experience</button>
+            <button class="b-tab" onclick="setBuilderStep(3)">Education</button>
+            <button class="b-tab" onclick="setBuilderStep(4)">Skills</button>
+          </div>
+
+          <div class="form-scroll-container">
+            <!-- Step 1: Personal -->
+            <div class="builder-step active" id="step-1">
+              <h3>Personal Details</h3>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Full Name</label>
+                  <input type="text" id="input-fullname" value="Alex Morgan" oninput="updateResumeState()">
+                </div>
+                <div class="form-group">
+                  <label>Job Title</label>
+                  <input type="text" id="input-title" value="Senior Full Stack Engineer" oninput="updateResumeState()">
+                </div>
+                <div class="form-group">
+                  <label>Email Address</label>
+                  <input type="email" id="input-email" value="alex.morgan@example.com" oninput="updateResumeState()">
+                </div>
+                <div class="form-group">
+                  <label>Phone Number</label>
+                  <input type="text" id="input-phone" value="+91 98765 43210" oninput="updateResumeState()">
+                </div>
+                <div class="form-group full">
+                  <label>Location</label>
+                  <input type="text" id="input-location" value="Bangalore, India" oninput="updateResumeState()">
+                </div>
+                <div class="form-group full">
+                  <div class="label-with-ai">
+                    <label>Professional Summary</label>
+                    <button class="btn-ai-sm" onclick="triggerAISummary()"><i data-lucide="sparkles"></i> AI Enhance</button>
+                  </div>
+                  <textarea id="input-summary" rows="4" oninput="updateResumeState()">Passionate Full Stack Engineer with 6+ years of experience building scalable web applications using React, Node.js, and cloud platforms. Proven track record of improving site latency by 40% and leading high-performing software teams.</textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 2: Experience -->
+            <div class="builder-step" id="step-2">
+              <h3>Work Experience</h3>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Company Name</label>
+                  <input type="text" id="input-company" value="TechCorp Solutions" oninput="updateResumeState()">
+                </div>
+                <div class="form-group">
+                  <label>Role / Position</label>
+                  <input type="text" id="input-role" value="Lead Developer" oninput="updateResumeState()">
+                </div>
+                <div class="form-group">
+                  <label>Duration</label>
+                  <input type="text" id="input-duration" value="2021 - Present" oninput="updateResumeState()">
+                </div>
+                <div class="form-group full">
+                  <label>Key Responsibilities & Achievements</label>
+                  <textarea id="input-exp-desc" rows="4" oninput="updateResumeState()">• Architected microservices architecture handling over 2M daily API requests.
+• Spearheaded frontend migration to modern reactive frameworks, boosting lighthouse score to 98.
+• Mentored 8 junior developers and instituted automated testing pipelines.</textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 3: Education -->
+            <div class="builder-step" id="step-3">
+              <h3>Education</h3>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Degree / Major</label>
+                  <input type="text" id="input-degree" value="B.Tech in Computer Science" oninput="updateResumeState()">
+                </div>
+                <div class="form-group">
+                  <label>University / Institute</label>
+                  <input type="text" id="input-school" value="Indian Institute of Technology" oninput="updateResumeState()">
+                </div>
+                <div class="form-group full">
+                  <label>Graduation Year</label>
+                  <input type="text" id="input-edu-year" value="2016 - 2020" oninput="updateResumeState()">
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 4: Skills -->
+            <div class="builder-step" id="step-4">
+              <h3>Skills & Competencies</h3>
+              <div class="form-group full">
+                <label>Comma-Separated Skills</label>
+                <input type="text" id="input-skills" value="JavaScript, React, Node.js, TypeScript, PostgreSQL, AWS, GraphQL, Docker" oninput="updateResumeState()">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Resume Preview -->
+        <div class="builder-preview-wrapper">
+          <div class="preview-toolbar">
+            <span class="preview-status"><i data-lucide="eye"></i> Live Preview</span>
+            <div class="toolbar-actions">
+              <button class="btn btn-outline btn-sm" onclick="window.print()"><i data-lucide="printer"></i> Print</button>
+              <button class="btn btn-primary btn-sm" onclick="exportPDF()"><i data-lucide="download"></i> Download PDF</button>
+            </div>
+          </div>
+
+          <div class="paper-canvas" id="resume-paper">
+            <header class="resume-header">
+              <h1 id="pv-name">Alex Morgan</h1>
+              <p class="pv-title" id="pv-title">Senior Full Stack Engineer</p>
+              <div class="pv-contact">
+                <span id="pv-email">alex.morgan@example.com</span> | 
+                <span id="pv-phone">+91 98765 43210</span> | 
+                <span id="pv-location">Bangalore, India</span>
+              </div>
+            </header>
+
+            <section class="pv-section">
+              <h2 class="pv-sec-title">Professional Summary</h2>
+              <p id="pv-summary">Passionate Full Stack Engineer with 6+ years of experience building scalable web applications using React, Node.js, and cloud platforms. Proven track record of improving site latency by 40% and leading high-performing software teams.</p>
+            </section>
+
+            <section class="pv-section">
+              <h2 class="pv-sec-title">Experience</h2>
+              <div class="pv-exp-item">
+                <div class="pv-flex-between">
+                  <strong id="pv-company">TechCorp Solutions</strong>
+                  <span id="pv-duration">2021 - Present</span>
+                </div>
+                <div class="pv-subrole" id="pv-role">Lead Developer</div>
+                <p id="pv-exp-desc" class="pv-desc">• Architected microservices architecture handling over 2M daily API requests.<br>• Spearheaded frontend migration to modern reactive frameworks, boosting lighthouse score to 98.<br>• Mentored 8 junior developers and instituted automated testing pipelines.</p>
+              </div>
+            </section>
+
+            <section class="pv-section">
+              <h2 class="pv-sec-title">Education</h2>
+              <div class="pv-flex-between">
+                <strong id="pv-school">Indian Institute of Technology</strong>
+                <span id="pv-edu-year">2016 - 2020</span>
+              </div>
+              <div id="pv-degree">B.Tech in Computer Science</div>
+            </section>
+
+            <section class="pv-section">
+              <h2 class="pv-sec-title">Skills</h2>
+              <div id="pv-skills" class="pv-skills-tags">
+                <!-- Skill pills render here dynamically -->
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 3: TEMPLATES -->
+    <section id="page-templates" class="page-section">
+      <div class="container section-padding">
+        <div class="section-header center">
+          <h2>World-Class Resume Layouts</h2>
+          <p>Handcrafted by recruitment experts to guarantee 100% ATS readability.</p>
+        </div>
+
+        <div class="grid grid-3">
+          <div class="card template-card">
+            <div class="tpl-preview tpl-modern">Modern Tech</div>
+            <div class="tpl-info">
+              <h3>Modern Professional</h3>
+              <p>Clean double-line hierarchy suited for Software, Product, and Tech roles.</p>
+              <button class="btn btn-outline full-width" onclick="switchPage('builder')">Use Template</button>
+            </div>
+          </div>
+
+          <div class="card template-card">
+            <div class="tpl-preview tpl-minimal">Minimal Mono</div>
+            <div class="tpl-info">
+              <h3>Minimalist Executive</h3>
+              <p>High-density, classic grid design optimized for Senior Leadership and Operations.</p>
+              <button class="btn btn-outline full-width" onclick="switchPage('builder')">Use Template</button>
+            </div>
+          </div>
+
+          <div class="card template-card">
+            <div class="tpl-preview tpl-creative">Creative Flow</div>
+            <div class="tpl-info">
+              <h3>Creative Studio</h3>
+              <p>Subtle color highlights tailored for UI/UX Designers, Marketers, and Content Creators.</p>
+              <button class="btn btn-outline full-width" onclick="switchPage('builder')">Use Template</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 4: ATS CHECKER -->
+    <section id="page-ats-checker" class="page-section">
+      <div class="container section-padding">
+        <div class="section-header center">
+          <h2>Instant ATS Keyword & Grammar Auditor</h2>
+          <p>Upload your text or paste job requirements to evaluate compatibility scores.</p>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>Paste Job Description</h3>
+            <textarea id="ats-job-desc" rows="8" class="form-control" placeholder="Paste target job requirements here..."></textarea>
+            <button class="btn btn-primary margin-top" onclick="runATSCheck()">
+              <i data-lucide="cpu"></i> Analyze Match Score
+            </button>
+          </div>
+
+          <div class="card ats-results-card">
+            <h3>Optimization Score</h3>
+            <div class="ats-gauge-container">
+              <div class="ats-score-circle" id="ats-score-display">0%</div>
+            </div>
+            <div id="ats-feedback" class="ats-feedback-list">
+              <p class="placeholder-text">Click "Analyze Match Score" to run keyword extraction.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 5: PRICING -->
+    <section id="page-pricing" class="page-section">
+      <div class="container section-padding">
+        <div class="section-header center">
+          <h2>Flexible Plans for Every Career Stage</h2>
+          <p>Cancel or change your subscription at any time.</p>
+        </div>
+
+        <div class="grid grid-3 pricing-grid">
+          <div class="card pricing-card">
+            <div class="pricing-header">
+              <h3>Starter</h3>
+              <div class="price">₹0</div>
+              <p>Basic exports</p>
+            </div>
+            <ul class="pricing-features">
+              <li><i data-lucide="check"></i> 1 Basic Template</li>
+              <li><i data-lucide="check"></i> Standard Export Options</li>
+            </ul>
+            <button class="btn btn-outline full-width" onclick="switchPage('builder')">Get Started</button>
+          </div>
+
+          <div class="card pricing-card featured">
+            <div class="badge-featured">Recommended</div>
+            <div class="pricing-header">
+              <h3>Pro Monthly</h3>
+              <div class="price">₹199 <span>/month</span></div>
+              <p>Everything unlocked</p>
+            </div>
+            <ul class="pricing-features">
+              <li><i data-lucide="check"></i> All Premium Layouts</li>
+              <li><i data-lucide="check"></i> Unlimited AI Generations</li>
+              <li><i data-lucide="check"></i> Unlimited PDF Downloads</li>
+            </ul>
+            <button class="btn btn-primary full-width" onclick="switchPage('builder')">Subscribe Pro</button>
+          </div>
+
+          <div class="card pricing-card">
+            <div class="pricing-header">
+              <h3>Lifetime Pass</h3>
+              <div class="price">₹999</div>
+              <p>Single payment forever</p>
+            </div>
+            <ul class="pricing-features">
+              <li><i data-lucide="check"></i> Unlimited Access Forever</li>
+              <li><i data-lucide="check"></i> Priority Support</li>
+            </ul>
+            <button class="btn btn-outline full-width" onclick="switchPage('builder')">Claim Pass</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 6: DASHBOARD -->
+    <section id="page-dashboard" class="page-section">
+      <div class="container section-padding">
+        <div class="dashboard-header">
+          <h2>Welcome Back, Alex</h2>
+          <p>Manage your saved resumes, downloads, and AI settings.</p>
+        </div>
+
+        <div class="grid grid-3 margin-top">
+          <div class="card dash-item">
+            <i data-lucide="file-text" class="dash-icon"></i>
+            <h3>Software Engineer Resume</h3>
+            <p>Last edited 2 hours ago</p>
+            <button class="btn btn-sm btn-primary" onclick="switchPage('builder')">Edit Resume</button>
+          </div>
+
+          <div class="card dash-item">
+            <i data-lucide="plus-circle" class="dash-icon"></i>
+            <h3>Create New Document</h3>
+            <p>Start from a blank canvas</p>
+            <button class="btn btn-sm btn-outline" onclick="switchPage('builder')">Start Fresh</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <span class="logo-text">BrandBlitz<span class="logo-accent">.AI</span></span>
+        <p>Building career pathways with artificial intelligence.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#" onclick="switchPage('home')">Home</a>
+        <a href="#" onclick="switchPage('builder')">Builder</a>
+        <a href="#" onclick="switchPage('templates')">Templates</a>
+        <a href="#" onclick="switchPage('pricing')">Pricing</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 BrandBlitz AI Inc. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
