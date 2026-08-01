@@ -1,3 +1,4 @@
+console.log("Resume Save Module Loaded");
 /**
  * BRANDBLITZ RESUME AI - CORE APPLICATION LOGIC
  * Handlers: Router, Live Synchronized State Engine, ATS Scanner, & PDF Exporter
