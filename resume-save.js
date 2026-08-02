@@ -33,10 +33,19 @@ async function saveResume() {
     }
 
     await addDoc(collection(db, "resumes"), {
-      uid: user.uid,
-      createdAt: serverTimestamp(),
-      title: "My Resume"
-    });
+  uid: user.uid,
+  createdAt: serverTimestamp(),
+
+  fullName: document.getElementById("fullName")?.value || "",
+  title: document.getElementById("title")?.value || "",
+  email: document.getElementById("email")?.value || "",
+  phone: document.getElementById("phone")?.value || "",
+  location: document.getElementById("location")?.value || "",
+  summary: document.getElementById("summary")?.value || "",
+  skills: document.getElementById("skills")?.value || "",
+  experience: document.getElementById("experience")?.value || "",
+  education: document.getElementById("education")?.value || ""
+});
 
     // Increase resume count
     await updateDoc(userRef, {
