@@ -1,10 +1,26 @@
-import { auth, db } from "./firebase-config.js";
+// Get user document
+const userRef = doc(db, "users", user.uid);
+const userSnap = await getDoc(userRef);
 
-import {
-  collection,
-  addDoc,
-  serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+if (!userSnap.exists()) {
+    alert("User not found.");
+    return;
+}
+
+const userData = userSnap.data();
+
+// Free plan limit
+if (
+    userData.plan === "free" &&
+    (userData.resumeCount || 0) >= 5
+) {
+    alert("Free plan limit reached. Upgrade to Pro ₹199.");
+    window.open(
+        "https://brandblitz7.gumroad.com/l/brandblitz-pro-199",
+        "_blank"
+    );
+    return;
+}
 
 console.log("Resume Save Module Loaded");
 async function saveResume() {
