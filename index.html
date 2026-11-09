@@ -508,6 +508,35 @@
   </footer>
 
   <script src="assets/js/app.js"></script>
+  <!-- Reliable page navigation fallback: keep all app pages reachable on mobile and desktop. -->
+  <script>
+    (function () {
+      function showPage(pageId) {
+        var pages = document.querySelectorAll("main#app > .page-section");
+        var target = document.getElementById("page-" + pageId);
+        if (!target) return false;
+        pages.forEach(function (page) {
+          page.classList.toggle("active", page === target);
+        });
+        document.querySelectorAll(".nav-link").forEach(function (link) {
+          link.classList.toggle("active", link.getAttribute("href") === "#" + pageId);
+        });
+        if (window.history && window.history.replaceState) {
+          window.history.replaceState(null, "", "#" + pageId);
+        }
+        window.scrollTo(0, 0);
+        return false;
+      }
+      window.switchPage = showPage;
+      document.addEventListener("DOMContentLoaded", function () {
+        var pages = document.querySelectorAll("main#app > .page-section");
+        var active = document.querySelector("main#app > .page-section.active");
+        if (!active && pages.length) pages[0].classList.add("active");
+        var initial = window.location.hash.replace("#", "");
+        if (initial && document.getElementById("page-" + initial)) showPage(initial);
+      });
+    })();
+  </script>
 <script type="module" src="auth.js"></script>
 <script type="module" src="resume-save.js"></script>
   
