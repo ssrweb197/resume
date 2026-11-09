@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head> 
-<script type="module" src="firebase-config.js"></script>
-<script type="module" src="auth.js"></script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-FM1GMPGR39"></script>
 <script>
@@ -54,7 +52,7 @@
         <span class="logo-text">BrandBlitz<span class="logo-accent">.AI</span></span>
       </a>
 
-      <nav class="nav-links">
+      <nav class="nav-links" id="navLinks">
         <a href="#home" class="nav-link active" onclick="switchPage('home')">Home</a>
         <a href="#builder" class="nav-link" onclick="switchPage('builder')">Resume Builder</a>
         <a href="#templates" class="nav-link" onclick="switchPage('templates')">Templates</a>
@@ -65,16 +63,10 @@
       <div class="nav-actions">
         <div class="nav-actions">
 
-    <button id="googleLogin" class="btn btn-outline">
-        Continue with Google
-    </button>
-
-    <button id="logout" class="btn btn-outline" style="display:none;">
-        Logout
-    </button>
-    <span id="userName"
-      style="margin-left:10px;font-weight:bold;color:#2563eb;">
-</span>
+    <button id="openLogin" class="btn btn-outline" type="button">Login</button>
+    <button id="openSignup" class="btn btn-primary" type="button">Sign Up</button>
+    <button id="logout" class="btn btn-outline" style="display:none;" type="button">Logout</button>
+    <span id="userName" style="margin-left:10px;font-weight:bold;color:#2563eb;"></span>
     <button class="btn btn-primary" onclick="switchPage('builder')">
         Create Resume
     </button>
@@ -108,20 +100,11 @@
             </button>
           </div>
 
-          <div class="hero-stats">
+          <div class="hero-trust-note"><strong>Your details stay yours.</strong> Create and preview a resume using your own information.</div>
+         <div class="stat-divider"></div>
             <div class="stat-item">
-              <span class="stat-number">98%</span>
-              <span class="stat-label">ATS Pass Rate</span>
-            </div>
-            <div class="stat-divider"></div>
-            <div class="stat-item">
-              <span class="stat-number">500+</span>
-              <span class="stat-label">Resumes Generated</span>
-            </div>
-            <div class="stat-divider"></div>
-            <div class="stat-item">
-              <span class="stat-number">3.5x</span>
-              <span class="stat-label">More Interview Invites</span>
+              <span class="stat-number"></span>
+              <span class="stat-label">Tools for your next application</span>
             </div>
           </div>
         </div>
@@ -155,61 +138,6 @@
         </div>
       </div>
 
-      <!-- Pricing Preview -->
-      <div class="container section-padding">
-        <div class="section-header center">
-          <h2>Simple, Transparent Pricing</h2>
-          <p>Invest in your career with affordable, high-impact plans.</p>
-        </div>
-
-        <div class="grid grid-3 pricing-grid">
-          <div class="card pricing-card">
-            <div class="pricing-header">
-              <h3>Free Plan</h3>
-              <div class="price">₹0</div>
-              <p>Ideal for quick fixes</p>
-            </div>
-            <ul class="pricing-features">
-              <li><i data-lucide="check"></i> 1 Basic Resume</li>
-              <li><i data-lucide="check"></i> 3 PDF Downloads</li>
-              <li><i data-lucide="check"></i> Basic Formatting</li>
-            </ul>
-            <button class="btn btn-outline full-width" onclick="switchPage('builder')">Get Started</button>
-          </div>
-
-          <div class="card pricing-card featured">
-            <div class="badge-featured">Most Popular</div>
-            <div class="pricing-header">
-              <h3>Pro Monthly</h3>
-              <div class="price">₹199 <span>/mo</span></div>
-              <p>Full suite AI tools</p>
-            </div>
-            <ul class="pricing-features">
-              <li><i data-lucide="check"></i> Unlimited Downloads</li>
-              <li><i data-lucide="check"></i> Premium Templates</li>
-              <li><i data-lucide="check"></i> AI Content Writer</li>
-              <li><i data-lucide="check"></i> Full ATS Keyword Scanner</li>
-            </ul>
-            <button class="btn btn-primary full-width" onclick="switchPage('builder')">Upgrade to Pro – ₹199</button>
-          </div>
-
-          <div class="card pricing-card">
-            <div class="pricing-header">
-              <h3>Lifetime</h3>
-              <div class="price">₹999 <span>one-time</span></div>
-              <p>Career-long access</p>
-            </div>
-            <ul class="pricing-features">
-              <li><i data-lucide="check"></i> All Pro Features Forever</li>
-              <li><i data-lucide="check"></i> Priority Template Updates</li>
-              <li><i data-lucide="check"></i> 1-on-1 Resume Review Discount</li>
-            </ul>
-            <button class="btn btn-outline full-width" onclick="switchPage('builder')">Get Lifetime – ₹999</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- PAGE 2: RESUME BUILDER -->
     <section id="page-builder" class="page-section">
       <div class="builder-layout">
@@ -229,30 +157,30 @@
               <div class="form-grid">
                 <div class="form-group">
                   <label>Full Name</label>
-                  <input type="text" id="input-fullname" value="Alex Morgan" oninput="updateResumeState()">
+                  <input type="text" id="input-fullname" value="" oninput="updateResumeState()">
                 </div>
                 <div class="form-group">
                   <label>Job Title</label>
-                  <input type="text" id="input-title" value="Senior Full Stack Engineer" oninput="updateResumeState()">
+                  <input type="text" id="input-title" value="" oninput="updateResumeState()">
                 </div>
                 <div class="form-group">
                   <label>Email Address</label>
-                  <input type="email" id="input-email" value="alex.morgan@example.com" oninput="updateResumeState()">
+                  <input type="email" id="input-email" value="" oninput="updateResumeState()">
                 </div>
                 <div class="form-group">
                   <label>Phone Number</label>
-                  <input type="text" id="input-phone" value="+91 98765 43210" oninput="updateResumeState()">
+                  <input type="text" id="input-phone" value="" oninput="updateResumeState()">
                 </div>
                 <div class="form-group full">
                   <label>Location</label>
-                  <input type="text" id="input-location" value="Bangalore, India" oninput="updateResumeState()">
+                  <input type="text" id="input-location" value="" oninput="updateResumeState()">
                 </div>
                 <div class="form-group full">
                   <div class="label-with-ai">
                     <label>Professional Summary</label>
-                    <button class="btn-ai-sm" onclick="triggerAISummary()"><i data-lucide="sparkles"></i> AI Enhance</button>
+                    <span class="feature-note">AI writing assistance: coming soon</span>
                   </div>
-                  <textarea id="input-summary" rows="4" oninput="updateResumeState()">Passionate Full Stack Engineer with 6+ years of experience building scalable web applications using React, Node.js, and cloud platforms. Proven track record of improving site latency by 40% and leading high-performing software teams.</textarea>
+                  <textarea id="input-summary" rows="4" oninput="updateResumeState()"></textarea>
                 </div>
               </div>
             </div>
@@ -263,21 +191,19 @@
               <div class="form-grid">
                 <div class="form-group">
                   <label>Company Name</label>
-                  <input type="text" id="input-company" value="TechCorp Solutions" oninput="updateResumeState()">
+                  <input type="text" id="input-company" value="" oninput="updateResumeState()">
                 </div>
                 <div class="form-group">
                   <label>Role / Position</label>
-                  <input type="text" id="input-role" value="Lead Developer" oninput="updateResumeState()">
+                  <input type="text" id="input-role" value="" oninput="updateResumeState()">
                 </div>
                 <div class="form-group">
                   <label>Duration</label>
-                  <input type="text" id="input-duration" value="2021 - Present" oninput="updateResumeState()">
+                  <input type="text" id="input-duration" value="" oninput="updateResumeState()">
                 </div>
                 <div class="form-group full">
                   <label>Key Responsibilities & Achievements</label>
-                  <textarea id="input-exp-desc" rows="4" oninput="updateResumeState()">• Architected microservices architecture handling over 2M daily API requests.
-• Spearheaded frontend migration to modern reactive frameworks, boosting lighthouse score to 98.
-• Mentored 8 junior developers and instituted automated testing pipelines.</textarea>
+                  <textarea id="input-exp-desc" rows="4" oninput="updateResumeState()"></textarea>
                 </div>
               </div>
             </div>
@@ -288,15 +214,15 @@
               <div class="form-grid">
                 <div class="form-group">
                   <label>Degree / Major</label>
-                  <input type="text" id="input-degree" value="B.Tech in Computer Science" oninput="updateResumeState()">
+                  <input type="text" id="input-degree" value="" oninput="updateResumeState()">
                 </div>
                 <div class="form-group">
                   <label>University / Institute</label>
-                  <input type="text" id="input-school" value="Indian Institute of Technology" oninput="updateResumeState()">
+                  <input type="text" id="input-school" value="" oninput="updateResumeState()">
                 </div>
                 <div class="form-group full">
                   <label>Graduation Year</label>
-                  <input type="text" id="input-edu-year" value="2016 - 2020" oninput="updateResumeState()">
+                  <input type="text" id="input-edu-year" value="" oninput="updateResumeState()">
                 </div>
               </div>
             </div>
@@ -306,7 +232,7 @@
               <h3>Skills & Competencies</h3>
               <div class="form-group full">
                 <label>Comma-Separated Skills</label>
-                <input type="text" id="input-skills" value="JavaScript, React, Node.js, TypeScript, PostgreSQL, AWS, GraphQL, Docker" oninput="updateResumeState()">
+                <input type="text" id="input-skills" value="" oninput="updateResumeState()">
               </div>
             </div>
           </div>
@@ -320,8 +246,7 @@
               <button class="btn btn-outline btn-sm" onclick="window.print()"><i data-lucide="printer"></i> Print</button>
               <button class="btn btn-primary btn-sm" onclick="exportPDF()"><i data-lucide="download"></i> Download PDF</button>
              
-    🤖 AI Resume Import (1 Free)
-</button>
+    
               <button class="btn btn-secondary" onclick="saveResume()">
     💾 Save Resume
 </button>
@@ -330,39 +255,39 @@
 
           <div class="paper-canvas" id="resume-paper">
             <header class="resume-header">
-              <h1 id="pv-name">Alex Morgan</h1>
-              <p class="pv-title" id="pv-title">Senior Full Stack Engineer</p>
+              <h1 id="pv-name">Your Name</h1>
+              <p class="pv-title" id="pv-title">Your Professional Title</p>
               <div class="pv-contact">
-                <span id="pv-email">alex.morgan@example.com</span> | 
-                <span id="pv-phone">+91 98765 43210</span> | 
-                <span id="pv-location">Bangalore, India</span>
+                <span id="pv-email"></span> | 
+                <span id="pv-phone"></span> | 
+                <span id="pv-location"></span>
               </div>
             </header>
 
             <section class="pv-section">
               <h2 class="pv-sec-title">Professional Summary</h2>
-              <p id="pv-summary">Passionate Full Stack Engineer with 6+ years of experience building scalable web applications using React, Node.js, and cloud platforms. Proven track record of improving site latency by 40% and leading high-performing software teams.</p>
+              <p id="pv-summary"></p>
             </section>
 
             <section class="pv-section">
               <h2 class="pv-sec-title">Experience</h2>
               <div class="pv-exp-item">
                 <div class="pv-flex-between">
-                  <strong id="pv-company">TechCorp Solutions</strong>
-                  <span id="pv-duration">2021 - Present</span>
+                  <strong id="pv-company"></strong>
+                  <span id="pv-duration"></span>
                 </div>
-                <div class="pv-subrole" id="pv-role">Lead Developer</div>
-                <p id="pv-exp-desc" class="pv-desc">• Architected microservices architecture handling over 2M daily API requests.<br>• Spearheaded frontend migration to modern reactive frameworks, boosting lighthouse score to 98.<br>• Mentored 8 junior developers and instituted automated testing pipelines.</p>
+                <div class="pv-subrole" id="pv-role"></div>
+                <p id="pv-exp-desc" class="pv-desc"></p>
               </div>
             </section>
 
             <section class="pv-section">
               <h2 class="pv-sec-title">Education</h2>
               <div class="pv-flex-between">
-                <strong id="pv-school">Indian Institute of Technology</strong>
-                <span id="pv-edu-year">2016 - 2020</span>
+                <strong id="pv-school"></strong>
+                <span id="pv-edu-year"></span>
               </div>
-              <div id="pv-degree">B.Tech in Computer Science</div>
+              <div id="pv-degree"></div>
             </section>
 
             <section class="pv-section">
@@ -381,7 +306,7 @@
       <div class="container section-padding">
         <div class="section-header center">
           <h2>World-Class Resume Layouts</h2>
-          <p>Handcrafted by recruitment experts to guarantee 100% ATS readability.</p>
+          <p>Choose a layout and compare resume keywords. No template can guarantee an ATS result.</p>
         </div>
 
         <div class="grid grid-3">
@@ -390,25 +315,25 @@
             <div class="tpl-info">
               <h3>Modern Professional ✅ Available</h3>
               <p>Clean double-line hierarchy suited for Software, Product, and Tech roles.</p>
-              <button class="btn btn-outline full-width" onclick="switchPage('builder')">Use Template</button>
+              <button class="btn btn-outline full-width" onclick="switchPage('builder')">Coming Soon</button>
             </div>
           </div>
 
           <div class="card template-card">
             <div class="tpl-preview tpl-minimal">Minimal Mono</div>
             <div class="tpl-info">
-              <h3>Minimal Executive 🚧 Coming Soon</h3>
-              <p>High-density, classic grid design optimized for Senior Leadership and Operations.</p>
-              <button class="btn btn-outline full-width" onclick="switchPage('builder')">Use Template</button>
+              <h3>Minimal Executive — Coming Soon</h3>
+              <p>This layout is not available yet.</p>
+              <button class="btn btn-outline full-width" disabled>Coming Soon</button>
             </div>
           </div>
 
           <div class="card template-card">
             <div class="tpl-preview tpl-creative">Creative Flow</div>
             <div class="tpl-info">
-              <h3>Creative Studio 🚧 Coming Soon</h3>
-              <p>Subtle color highlights tailored for UI/UX Designers, Marketers, and Content Creators.</p>
-              <button class="btn btn-outline full-width" onclick="switchPage('builder')">Use Template</button>
+              <h3>Creative Studio — Coming Soon</h3>
+              <p>This layout is not available yet.</p>
+              <button class="btn btn-outline full-width" disabled>Coming Soon</button>
             </div>
           </div>
         </div>
@@ -450,7 +375,7 @@
       <div class="container section-padding">
         <div class="section-header center">
           <h2>Flexible Plans for Every Career Stage</h2>
-          <p>Cancel or change your subscription at any time.</p>
+          <p>Premium checkout is not active yet. No payment will be collected here.</p>
         </div>
 
         <div class="grid grid-3 pricing-grid">
@@ -471,28 +396,28 @@
             <div class="badge-featured">Recommended</div>
             <div class="pricing-header">
               <h3>Pro Monthly</h3>
-              <div class="price">₹199 <span>/month</span></div>
-              <p>Everything unlocked</p>
+              <div class="price">Coming Soon <span>/month</span></div>
+              <p>Premium plan is not available yet.</p>
             </div>
             <ul class="pricing-features">
               <li><i data-lucide="check"></i> All Premium Layouts</li>
               <li><i data-lucide="check"></i> Unlimited AI Generations</li>
               <li><i data-lucide="check"></i> Unlimited PDF Downloads</li>
             </ul>
-            <button class="btn btn-primary full-width" onclick="switchPage('builder')">Subscribe Pro</button>
+            <button class="btn btn-primary full-width" disabled>Premium — Coming Soon</button>
           </div>
 
           <div class="card pricing-card">
             <div class="pricing-header">
               <h3>Lifetime Pass</h3>
-              <div class="price">₹999</div>
-              <p>Single payment forever</p>
+              <div class="price">Coming Soon</div>
+              <p>Lifetime plan is not available yet.</p>
             </div>
             <ul class="pricing-features">
               <li><i data-lucide="check"></i> Unlimited Access Forever</li>
               <li><i data-lucide="check"></i> Priority Support</li>
             </ul>
-            <button class="btn btn-outline full-width" onclick="switchPage('builder')">Claim Pass</button>
+            <button class="btn btn-outline full-width" disabled>Lifetime — Coming Soon</button>
           </div>
         </div>
       </div>
@@ -502,15 +427,15 @@
     <section id="page-dashboard" class="page-section">
       <div class="container section-padding">
         <div class="dashboard-header">
-          <h2>Welcome Back, Alex</h2>
+          <h2>Your Resume Workspace</h2>
           <p>Manage your saved resumes, downloads, and AI settings.</p>
         </div>
 
         <div class="grid grid-3 margin-top">
           <div class="card dash-item">
             <i data-lucide="file-text" class="dash-icon"></i>
-            <h3>Software Engineer Resume</h3>
-            <p>Last edited 2 hours ago</p>
+            <h3>Your saved resumes</h3>
+            <p>Saved documents will appear here when account storage is available.</p>
             <button class="btn btn-sm btn-primary" onclick="switchPage('builder')">Edit Resume</button>
           </div>
 
@@ -523,6 +448,35 @@
         </div>
       </div>
     </section>
+
+  <!-- Authentication dialog -->
+  <div class="auth-modal" id="authModal" aria-hidden="true">
+    <div class="auth-backdrop" data-close-auth></div>
+    <section class="auth-dialog" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+      <button class="auth-close" type="button" aria-label="Close" data-close-auth>&times;</button>
+      <div class="auth-brand">BrandBlitz<span>.AI</span></div>
+      <h2 id="authTitle">Welcome back</h2>
+      <p class="auth-intro" id="authIntro">Sign in to access your saved resumes.</p>
+      <div class="auth-tabs">
+        <button type="button" class="auth-tab active" id="loginTab">Login</button>
+        <button type="button" class="auth-tab" id="signupTab">Create account</button>
+      </div>
+      <form id="emailAuthForm">
+        <label for="authName" id="authNameLabel" hidden>Full name</label>
+        <input id="authName" type="text" autocomplete="name" placeholder="Full name" hidden>
+        <label for="authEmail">Email address</label>
+        <input id="authEmail" type="email" autocomplete="email" placeholder="you@example.com" required>
+        <label for="authPassword">Password</label>
+        <input id="authPassword" type="password" autocomplete="current-password" placeholder="At least 6 characters" minlength="6" required>
+        <button class="btn btn-primary auth-submit" id="authSubmit" type="submit">Login</button>
+      </form>
+      <button type="button" class="auth-forgot" id="forgotPassword">Forgot password?</button>
+      <div class="auth-divider"><span>or</span></div>
+      <button type="button" class="btn btn-outline auth-google" id="googleLogin">Continue with Google</button>
+      <p class="auth-message" id="authMessage" role="status" aria-live="polite"></p>
+      <p class="auth-terms">By continuing, you agree to use this service responsibly.</p>
+    </section>
+  </div>
 
   </main>
 
@@ -547,12 +501,11 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2026 BrandBlitz AI Inc. All rights reserved.</p>
+      <p>&copy; 2026 BrandBlitz All rights reserved.</p>
     </div>
   </footer>
 
   <script src="assets/js/app.js"></script>
-  <script type="module" src="firebase-config.js"></script>
 <script type="module" src="auth.js"></script>
 <script type="module" src="resume-save.js"></script>
   

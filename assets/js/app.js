@@ -211,3 +211,13 @@ window.updateResumeState = updateResumeState;
 window.triggerAISummary = triggerAISummary;
 window.exportPDF = exportPDF;
 window.runATSCheck = runATSCheck;
+
+
+// Responsive mobile navigation added for the updated header.
+document.addEventListener("DOMContentLoaded", () => {
+  const menuButton = document.getElementById("mobileMenuBtn");
+  const navLinks = document.getElementById("navLinks");
+  if (menuButton && navLinks) {
+    menuButton.addEventListener("click", () => navLinks.classList.toggle("mobile-open"));
+  }
+});
