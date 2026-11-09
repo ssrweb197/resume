@@ -1,63 +1,12 @@
-async function saveResume() {
-  try {
-
-    const user = auth.currentUser;
-
-    if (!user) {
-      alert("Please login first.");
-      return;
-    }
-
-    // Get user document
-    const userRef = doc(db, "users", user.uid);
-    const userSnap = await getDoc(userRef);
-
-    if (!userSnap.exists()) {
-      alert("User not found.");
-      return;
-    }
-
-    const userData = userSnap.data();
-
-    // Free plan limit
-    if (
-      userData.plan === "free" &&
-      (userData.resumeCount || 0) >= 5
-    ) {
-      alert("Free plan limit reached. Upgrade to Pro ₹199.");
-      window.open(
-        "https://brandblitz7.gumroad.com/l/brandblitz-pro-199",
-        "_blank"
-      );
-      return;
-    }
-
-    await addDoc(collection(db, "resumes"), {
-  uid: user.uid,
-  createdAt: serverTimestamp(),
-
-  fullName: document.getElementById("fullName")?.value || "",
-  title: document.getElementById("title")?.value || "",
-  email: document.getElementById("email")?.value || "",
-  phone: document.getElementById("phone")?.value || "",
-  location: document.getElementById("location")?.value || "",
-  summary: document.getElementById("summary")?.value || "",
-  skills: document.getElementById("skills")?.value || "",
-  experience: document.getElementById("experience")?.value || "",
-  education: document.getElementById("education")?.value || ""
-});
-
-    // Increase resume count
-    await updateDoc(userRef, {
-      resumeCount: (userData.resumeCount || 0) + 1
-    });
-
-    alert("Resume Saved Successfully!");
-
-  } catch (error) {
-    console.error(error);
-    alert("Error saving resume.");
-  }
+import {auth,db} from "./firebase-config.js";
+import {addDoc,collection,serverTimestamp} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+async function saveResume(){
+ const user=auth.currentUser;
+ if(!user){alert("Please sign in with Google before saving.");return;}
+ const v=id=>document.getElementById(id)?.value?.trim()||"";
+ const data={fullName:v("input-fullname"),title:v("input-title"),email:v("input-email"),phone:v("input-phone"),location:v("input-location"),summary:v("input-summary"),company:v("input-company"),role:v("input-role"),duration:v("input-duration"),experience:v("input-exp-desc"),degree:v("input-degree"),school:v("input-school"),educationYear:v("input-edu-year"),skills:v("input-skills").split(",").map(x=>x.trim()).filter(Boolean),uid:user.uid,ownerEmail:user.email||"",createdAt:serverTimestamp(),updatedAt:serverTimestamp()};
+ if(!data.fullName){alert("Please enter your name before saving.");return;}
+ try{await addDoc(collection(db,"resumes"),data);alert("Resume saved successfully.");}
+ catch(e){console.error("Resume save failed",e);alert("Could not save. Please check your connection and Firestore security rules.");}
 }
-
-window.saveResume = saveResume;
+window.saveResume=saveResume;
