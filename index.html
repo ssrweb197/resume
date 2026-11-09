@@ -63,16 +63,10 @@
       <div class="nav-actions">
         <div class="nav-actions">
 
-    <button id="googleLogin" class="btn btn-outline">
-        Continue with Google
-    </button>
-
-    <button id="logout" class="btn btn-outline" style="display:none;">
-        Logout
-    </button>
-    <span id="userName"
-      style="margin-left:10px;font-weight:bold;color:#2563eb;">
-</span>
+    <button id="openLogin" class="btn btn-outline" type="button">Login</button>
+    <button id="openSignup" class="btn btn-primary" type="button">Sign Up</button>
+    <button id="logout" class="btn btn-outline" style="display:none;" type="button">Logout</button>
+    <span id="userName" style="margin-left:10px;font-weight:bold;color:#2563eb;"></span>
     <button class="btn btn-primary" onclick="switchPage('builder')">
         Create Resume
     </button>
@@ -454,6 +448,35 @@
         </div>
       </div>
     </section>
+
+  <!-- Authentication dialog -->
+  <div class="auth-modal" id="authModal" aria-hidden="true">
+    <div class="auth-backdrop" data-close-auth></div>
+    <section class="auth-dialog" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+      <button class="auth-close" type="button" aria-label="Close" data-close-auth>&times;</button>
+      <div class="auth-brand">BrandBlitz<span>.AI</span></div>
+      <h2 id="authTitle">Welcome back</h2>
+      <p class="auth-intro" id="authIntro">Sign in to access your saved resumes.</p>
+      <div class="auth-tabs">
+        <button type="button" class="auth-tab active" id="loginTab">Login</button>
+        <button type="button" class="auth-tab" id="signupTab">Create account</button>
+      </div>
+      <form id="emailAuthForm">
+        <label for="authName" id="authNameLabel" hidden>Full name</label>
+        <input id="authName" type="text" autocomplete="name" placeholder="Full name" hidden>
+        <label for="authEmail">Email address</label>
+        <input id="authEmail" type="email" autocomplete="email" placeholder="you@example.com" required>
+        <label for="authPassword">Password</label>
+        <input id="authPassword" type="password" autocomplete="current-password" placeholder="At least 6 characters" minlength="6" required>
+        <button class="btn btn-primary auth-submit" id="authSubmit" type="submit">Login</button>
+      </form>
+      <button type="button" class="auth-forgot" id="forgotPassword">Forgot password?</button>
+      <div class="auth-divider"><span>or</span></div>
+      <button type="button" class="btn btn-outline auth-google" id="googleLogin">Continue with Google</button>
+      <p class="auth-message" id="authMessage" role="status" aria-live="polite"></p>
+      <p class="auth-terms">By continuing, you agree to use this service responsibly.</p>
+    </section>
+  </div>
 
   </main>
 
