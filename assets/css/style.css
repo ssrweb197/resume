@@ -694,3 +694,27 @@ button:disabled{opacity:.55;cursor:not-allowed}
 .review-download{margin-top:1rem}
 .drag-active{border-color:#315bd6!important;background:#edf4ff!important}
 @media(max-width:520px){.review-metrics{gap:.45rem}.review-metric{padding:.7rem .55rem}.review-metric strong{font-size:1.15rem}.review-metric span{font-size:.68rem}}
+
+
+/* AI rewritten resume preview and print-to-PDF layout */
+.ai-consent{display:flex;align-items:flex-start;gap:.65rem;max-width:850px;margin:1.1rem 0 .8rem;padding:.85rem 1rem;background:#fff9ed;border:1px solid #f1dfb8;border-radius:12px;color:#74521b;font-size:.8rem;line-height:1.55;cursor:pointer}
+.ai-consent input{width:17px;height:17px;flex:0 0 17px;margin-top:.1rem;accent-color:#315bd6}
+.review-ai-button{margin:.2rem 0 .4rem}.review-ai-button:disabled{opacity:.48;cursor:not-allowed}
+.ai-resume-actions{display:flex;flex-wrap:wrap;gap:.7rem;margin:1.2rem 0}
+.ai-resume-print{max-width:850px;margin:1rem auto 0;padding:2rem 2.2rem;background:#fff;border:1px solid #e4eaf4;border-radius:14px;color:#202b3c;box-shadow:0 8px 26px rgba(20,40,80,.06)}
+.ai-resume-print header{text-align:center;border-bottom:2px solid #263e70;padding-bottom:1rem;margin-bottom:1.2rem}
+.ai-resume-print h1{font-size:1.8rem;line-height:1.2;color:#14213d;margin:0 0 .3rem}
+.ai-resume-print h2{font-size:1rem;font-weight:600;color:#315bd6;margin:0 0 .55rem}
+.ai-resume-contact{font-size:.78rem;color:#667085;overflow-wrap:anywhere}
+.ai-resume-print section{margin:1rem 0;break-inside:avoid}
+.ai-resume-print section h3{font-size:.88rem;letter-spacing:.08em;text-transform:uppercase;color:#31518c;border-bottom:1px solid #dce4f1;padding-bottom:.35rem;margin-bottom:.5rem}
+.ai-resume-print p,.ai-resume-print li{font-size:.86rem;line-height:1.55;color:#354052;white-space:pre-wrap}
+.ai-resume-print ul{padding-left:1.2rem;margin:.35rem 0}
+@media(max-width:600px){.ai-resume-print{padding:1.1rem;margin:.8rem 0}.ai-resume-actions{flex-direction:column}.ai-resume-actions .btn{width:100%;justify-content:center}}
+@media print{
+  @page{size:A4;margin:16mm}
+  body *{visibility:hidden!important}
+  #aiResumePrint,#aiResumePrint *{visibility:visible!important}
+  #aiResumePrint{display:block!important;position:absolute!important;left:0!important;top:0!important;width:100%!important;max-width:none!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:#fff!important}
+  .no-print{display:none!important}
+}
