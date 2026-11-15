@@ -26,8 +26,9 @@ async function verifyFirebaseToken(token, projectId) {
   if (header.alg !== "RS256" || !header.kid) throw new Error("Unsupported sign-in token.");
   const now = Math.floor(Date.now() / 1000);
   if (claims.aud !== projectId || claims.iss !== `https://securetoken.google.com/${projectId}` ||
-      typeof claims.sub !== "string" || !claims.sub || claims.exp <= now ||
-      claims.iat > now || claims.auth_time > now) throw new Error("Please sign in again.");
+      typeof claims.sub !== "string" || !claims.sub || typeof claims.exp !== "number" || claims.exp <= now ||
+      typeof claims.iat !== "number" || claims.iat > now ||
+      typeof claims.auth_time !== "number" || claims.auth_time > now) throw new Error("Please sign in again.");
   const response = await fetch("https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com");
   if (!response.ok) throw new Error("Could not verify your sign-in. Please retry.");
   const jwks = await response.json();
@@ -69,6 +70,10 @@ export async function onRequestPost({ request, env }) {
     type: "object",
     additionalProperties: false,
     properties: {
+      fullName: { type: "string" },
+      email: { type: "string" },
+      phone: { type: "string" },
+      location: { type: "string" },
       professionalSummary: { type: "string" },
       targetTitle: { type: "string" },
       skills: { type: "array", items: { type: "string" } },
@@ -78,7 +83,7 @@ export async function onRequestPost({ request, env }) {
       improvementNotes: { type: "array", items: { type: "string" } },
       integrityNote: { type: "string" }
     },
-    required: ["professionalSummary", "targetTitle", "skills", "experience", "education", "projects", "improvementNotes", "integrityNote"]
+    required: ["fullName", "email", "phone", "location", "professionalSummary", "targetTitle", "skills", "experience", "education", "projects", "improvementNotes", "integrityNote"]
   };
   const prompt = [
     "Improve the supplied resume into clear, professional, ATS-readable wording.",
@@ -88,7 +93,7 @@ export async function onRequestPost({ request, env }) {
     "Do not add keywords from the job description unless the resume supports them. Do not claim ATS scores or guarantee hiring outcomes.",
     "Return concise text suitable for a one-page or two-page resume. Keep experience and projects as readable plain-text bullet lines.",
     "If the source resume has no experience, do not invent experience; use relevant internships/projects only when present.",
-    "Output professionalSummary, targetTitle, skills, experience, education, projects, improvementNotes and integrityNote.",
+    "Extract name, email, phone and location exactly as written in the source. Return empty strings if not found. Output fullName, email, phone, location, professionalSummary, targetTitle, skills, experience, education, projects, improvementNotes and integrityNote.",
     "RESUME TEXT:\n" + resumeText,
     "TARGET JOB DESCRIPTION (optional):\n" + jobDescription
   ].join("\n\n");
@@ -99,7 +104,7 @@ export async function onRequestPost({ request, env }) {
       method: "POST",
       headers: { "Authorization": "Bearer " + env.OPENAI_API_KEY, "Content-Type": "application/json" },
       body: JSON.stringify({
-        model: env.OPENAI_MODEL || "gpt-6-luna",
+        model: env.OPENAI_MODEL || "gpt-5-mini",
         input: [{ role: "user", content: [{ type: "input_text", text: prompt }] }],
         text: { format: { type: "json_schema", name: "resume_rewrite", strict: true, schema } },
         max_output_tokens: 2500,
