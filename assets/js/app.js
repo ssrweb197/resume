@@ -197,9 +197,190 @@ function renderResumeReview() {
   reportButton.addEventListener("click", () => downloadResumeReviewReport(checks, suggestions, wordCount));
   results.appendChild(reportButton);
 
+  const aiConsent = document.createElement("label");
+  aiConsent.className = "ai-consent no-print";
+  const consentBox = document.createElement("input");
+  consentBox.type = "checkbox";
+  consentBox.id = "aiRewriteConsent";
+  const consentText = document.createElement("span");
+  consentText.textContent = "I agree to send the extracted resume text and optional job description to our AI provider for rewriting. I understand this uses a third-party AI service.";
+  aiConsent.append(consentBox, consentText);
+  results.appendChild(aiConsent);
+
+  const aiButton = document.createElement("button");
+  aiButton.type = "button";
+  aiButton.id = "aiRewriteButton";
+  aiButton.className = "btn btn-primary review-ai-button no-print";
+  aiButton.textContent = "Rewrite My Resume with AI";
+  aiButton.disabled = true;
+  consentBox.addEventListener("change", () => { aiButton.disabled = !consentBox.checked; });
+  aiButton.addEventListener("click", requestAIRewrite);
+  results.appendChild(aiButton);
+
+  const aiStatus = document.createElement("p");
+  aiStatus.id = "aiRewriteStatus";
+  aiStatus.className = "review-disclaimer no-print";
+  aiStatus.setAttribute("role", "status");
+  aiStatus.setAttribute("aria-live", "polite");
+  results.appendChild(aiStatus);
+
   const disclaimer = document.createElement("p"); disclaimer.className = "review-disclaimer";
   disclaimer.textContent = "*Page count is a rough estimate. This is an automated text-based checklist, not a certified ATS score, recruiter assessment, grammar audit or interview guarantee. Some checks may miss differently worded sections. Verify all suggestions. Your file is processed in this browser and is not sent to our server by this review feature.";
   results.appendChild(disclaimer);
+  if (window.lucide) window.lucide.createIcons();
+}
+
+async function requestAIRewrite() {
+  const consent = document.getElementById("aiRewriteConsent");
+  const button = document.getElementById("aiRewriteButton");
+  const status = document.getElementById("aiRewriteStatus");
+  if (!uploadedResumeText || !consent?.checked || !button || !status) return;
+  if (!window.location.hostname.endsWith("pages.dev")) {
+    status.textContent = "AI rewrite is available on the Cloudflare Pages version of this website.";
+    return;
+  }
+  const user = window.resumeAuth?.currentUser;
+  if (!user) {
+    status.textContent = "Please log in first, then return here and select Rewrite My Resume.";
+    document.getElementById("openLogin")?.click();
+    return;
+  }
+  button.disabled = true;
+  status.textContent = "Preparing your rewritten resume…";
+  try {
+    const token = await user.getIdToken();
+    const response = await fetch("/api/rewrite", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
+      body: JSON.stringify({
+        resumeText: uploadedResumeText,
+        jobDescription: fieldValue("ats-job-desc")
+      })
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(result.error || "AI rewrite could not be completed.");
+    renderAIResume(result.rewrite || {});
+    status.textContent = "AI rewrite is ready. Please verify every detail before downloading or sharing.";
+  } catch (error) {
+    status.textContent = error.message || "AI rewrite failed. Please try again.";
+  } finally {
+    button.disabled = !consent.checked;
+  }
+}
+
+function renderAIResume(data) {
+  const results = document.getElementById("resumeReviewResults");
+  if (!results) return;
+  document.getElementById("aiResumePrint")?.remove();
+  const sheet = document.createElement("article");
+  sheet.id = "aiResumePrint";
+  sheet.className = "ai-resume-print";
+
+  const header = document.createElement("header");
+  const name = document.createElement("h1");
+  name.textContent = data.fullName || "Resume";
+  const title = document.createElement("h2");
+  title.textContent = data.targetTitle || "";
+  const contact = document.createElement("p");
+  contact.className = "ai-resume-contact";
+  contact.textContent = [data.email, data.phone, data.location].filter(Boolean).join("  |  ");
+  header.append(name, title, contact);
+  sheet.appendChild(header);
+
+  const addSection = (headingText, content) => {
+    if (!content || (Array.isArray(content) && !content.length)) return;
+    const section = document.createElement("section");
+    const heading = document.createElement("h3");
+    heading.textContent = headingText;
+    section.appendChild(heading);
+    if (Array.isArray(content)) {
+      const list = document.createElement("ul");
+      content.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = String(item);
+        list.appendChild(li);
+      });
+      section.appendChild(list);
+    } else {
+      const lines = String(content).split(/\r?\n/).map(line => line.trim()).filter(Boolean);
+      const bullets = lines.some(line => /^[-•*]\s+/.test(line));
+      if (bullets) {
+        const list = document.createElement("ul");
+        lines.forEach(line => {
+          const li = document.createElement("li");
+          li.textContent = line.replace(/^[-•*]\s+/, "");
+          list.appendChild(li);
+        });
+        section.appendChild(list);
+      } else {
+        lines.forEach(line => {
+          const p = document.createElement("p");
+          p.textContent = line;
+          section.appendChild(p);
+        });
+      }
+    }
+    sheet.appendChild(section);
+  };
+
+  addSection("Professional Summary", data.professionalSummary);
+  addSection("Key Skills", Array.isArray(data.skills) ? data.skills : []);
+  addSection("Professional Experience", data.experience);
+  addSection("Education", data.education);
+  addSection("Projects", data.projects);
+
+  const printActions = document.createElement("div");
+  printActions.className = "ai-resume-actions no-print";
+  const printButton = document.createElement("button");
+  printButton.type = "button";
+  printButton.className = "btn btn-primary";
+  printButton.textContent = "Print / Save as PDF";
+  printButton.addEventListener("click", () => window.print());
+  printActions.appendChild(printButton);
+
+  const applyButton = document.createElement("button");
+  applyButton.type = "button";
+  applyButton.className = "btn btn-outline";
+  applyButton.textContent = "Use main details in Resume Builder";
+  applyButton.addEventListener("click", () => {
+    const values = {
+      "input-fullname": data.fullName,
+      "input-title": data.targetTitle,
+      "input-email": data.email,
+      "input-phone": data.phone,
+      "input-location": data.location,
+      "input-summary": data.professionalSummary,
+      "input-skills": Array.isArray(data.skills) ? data.skills.join(", ") : ""
+    };
+    Object.entries(values).forEach(([id, value]) => {
+      const field = document.getElementById(id);
+      if (field && value) field.value = value;
+    });
+    updateResumeState();
+    switchPage("builder");
+  });
+  printActions.appendChild(applyButton);
+  results.appendChild(printActions);
+  results.appendChild(sheet);
+
+  const notes = document.createElement("div");
+  notes.className = "review-suggestions no-print";
+  const notesHeading = document.createElement("h4");
+  notesHeading.textContent = "AI review notes — check before using";
+  notes.appendChild(notesHeading);
+  const noteList = document.createElement("ul");
+  (Array.isArray(data.improvementNotes) ? data.improvementNotes : []).forEach(item => {
+    const li = document.createElement("li");
+    li.textContent = String(item);
+    noteList.appendChild(li);
+  });
+  if (data.integrityNote) {
+    const li = document.createElement("li");
+    li.textContent = String(data.integrityNote);
+    noteList.appendChild(li);
+  }
+  notes.appendChild(noteList);
+  results.appendChild(notes);
   if (window.lucide) window.lucide.createIcons();
 }
 
