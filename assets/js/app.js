@@ -122,6 +122,7 @@ async function handleResumeFile(file) {
     setStatus(`Ready: ${file.name}. Your resume text was extracted in your browser.`);
     if (button) button.disabled = false;
     renderResumeReview();
+    switchPage("ats-checker");
   } catch (error) {
     uploadedResumeText = "";
     uploadedResumeName = "";
