@@ -5,6 +5,8 @@ import {
   sendPasswordResetEmail, updateProfile
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
+window.resumeAuth = auth;
+
 const el = id => document.getElementById(id);
 const modal = el("authModal");
 const form = el("emailAuthForm");
