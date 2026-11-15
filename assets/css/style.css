@@ -718,3 +718,28 @@ button:disabled{opacity:.55;cursor:not-allowed}
   #aiResumePrint{display:block!important;position:absolute!important;left:0!important;top:0!important;width:100%!important;max-width:none!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:#fff!important}
   .no-print{display:none!important}
 }
+
+
+/* FAQ section: clean, accessible accordion cards */
+#faq.section-padding{padding:4.5rem 1.25rem;background:linear-gradient(180deg,#f7f9ff 0%,#ffffff 100%)}
+#faq .section-header{margin-bottom:2.2rem}
+#faq .section-header h2{margin:.65rem 0 .55rem;color:#14213d;font-size:clamp(1.8rem,4vw,2.45rem);line-height:1.2}
+#faq .section-header p{color:#66758d;font-size:1.02rem}
+#faq .faq-list{max-width:850px;margin:0 auto;display:grid;gap:.85rem}
+#faq .faq-item{background:#fff;border:1px solid #e4eaf4;border-radius:14px;box-shadow:0 4px 16px rgba(24,45,85,.045);overflow:hidden;transition:border-color .2s ease,box-shadow .2s ease}
+#faq .faq-item:hover,#faq .faq-item[open]{border-color:#b9cafa;box-shadow:0 8px 22px rgba(37,99,235,.08)}
+#faq .faq-item summary{position:relative;display:flex;align-items:center;gap:.8rem;list-style:none;cursor:pointer;padding:1.15rem 1.25rem;color:#1b2b49;font-weight:650;font-size:1rem;line-height:1.45}
+#faq .faq-item summary::-webkit-details-marker{display:none}
+#faq .faq-item summary::after{content:"+";display:grid;place-items:center;flex:0 0 28px;width:28px;height:28px;margin-left:auto;border-radius:50%;background:#edf3ff;color:#315bd6;font-size:1.25rem;font-weight:500}
+#faq .faq-item[open] summary::after{content:"−";background:#315bd6;color:#fff}
+#faq .faq-item p{margin:0;padding:0 1.25rem 1.2rem;color:#5c6b82;font-size:.96rem;line-height:1.7}
+#faq .faq-item a{color:#2458d3;font-weight:650;text-decoration:none}
+#faq .faq-item a:hover{text-decoration:underline}
+@media(max-width:600px){
+ #faq.section-padding{padding:3.2rem 1rem}
+ #faq .section-header{margin-bottom:1.6rem}
+ #faq .faq-list{gap:.7rem}
+ #faq .faq-item{border-radius:12px}
+ #faq .faq-item summary{padding:1rem;font-size:.94rem;gap:.55rem}
+ #faq .faq-item p{padding:0 1rem 1rem;font-size:.9rem}
+}
