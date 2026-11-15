@@ -135,14 +135,19 @@ function renderResumeReview() {
   if (!uploadedResumeText) return;
   const text = uploadedResumeText;
   const lower = text.toLowerCase();
+  const words = text.match(/[A-Za-z0-9+#.-]+/g) || [];
+  const wordCount = words.length;
   const checks = [
-    { label: "Email address", ok: /[\w.+-]+@[\w.-]+\.[a-z]{2,}/i.test(text), tip: "Add a professional email address." },
-    { label: "Phone number", ok: /(?:\+?\d[\d\s().-]{7,}\d)/.test(text), tip: "Add a reachable phone number with country code if applying internationally." },
-    { label: "Professional summary / profile", ok: /\b(summary|profile|objective|about me|professional statement)\b/i.test(text), tip: "Add a short professional summary tailored to the roles you want." },
-    { label: "Work experience", ok: /\b(experience|employment|work history|professional history|internship)\b/i.test(text), tip: "Include relevant work experience, internships or projects." },
-    { label: "Education", ok: /\b(education|qualification|university|college|degree|bachelor|master)\b/i.test(text), tip: "Include your education, institution and graduation year." },
-    { label: "Skills", ok: /\b(skills|technical skills|core competencies|key competencies)\b/i.test(text), tip: "Add a clearly labelled skills section with relevant skills." },
-    { label: "Readable achievement detail", ok: /\b(achieved|improved|reduced|increased|delivered|built|managed|led|created|saved|%|\d+\+)\b/i.test(text), tip: "Where accurate, add measurable outcomes and specific achievements." }
+    { label: "Email address", ok: /[\\w.+-]+@[\\w.-]+\\.[a-z]{2,}/i.test(text), tip: "Add a professional email address." },
+    { label: "Phone number", ok: /(?:\\+?\\d[\\d\\s().-]{7,}\\d)/.test(text), tip: "Add a reachable phone number with country code if applying internationally." },
+    { label: "Professional summary / profile", ok: /\\b(summary|profile|objective|about me|professional statement)\\b/i.test(text), tip: "Add a short professional summary tailored to the roles you want." },
+    { label: "Work experience", ok: /\\b(experience|employment|work history|professional history|internship)\\b/i.test(text), tip: "Include relevant work experience, internships or projects." },
+    { label: "Education", ok: /\\b(education|qualification|university|college|degree|bachelor|master)\\b/i.test(text), tip: "Include your education, institution and graduation year." },
+    { label: "Skills", ok: /\\b(skills|technical skills|core competencies|key competencies)\\b/i.test(text), tip: "Add a clearly labelled skills section with relevant skills." },
+    { label: "Projects or portfolio", ok: /\\b(projects?|portfolio|github|linkedin)\\b/i.test(text), tip: "Add relevant projects, a portfolio or professional profile link when useful for your field." },
+    { label: "Dates or time periods", ok: /\\b(19|20)\\d{2}\\b/.test(text) || /\\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\\b/i.test(text), tip: "Check that education and employment dates are clear and consistent." },
+    { label: "Achievement-focused language", ok: /\\b(achieved|improved|reduced|increased|delivered|built|managed|led|created|saved|launched|designed|automated)\\b/i.test(text), tip: "Where accurate, start bullet points with strong action verbs and explain your contribution." },
+    { label: "Measurable results", ok: /\\b\\d+(?:\\.\\d+)?\\s*(%|percent|users|customers|projects|hours|days|weeks|months|years|\\+|k|m)\\b/i.test(text) || /\\b(increased|reduced|saved|grew|improved)\\b.{0,55}\\b\\d+/i.test(text), tip: "Add truthful numbers or measurable outcomes to demonstrate impact, where possible." }
   ];
   const passed = checks.filter(item => item.ok).length;
   const results = document.getElementById("resumeReviewResults");
@@ -154,8 +159,17 @@ function renderResumeReview() {
   const title = document.createElement("h3"); title.textContent = "Resume review complete";
   const subtitle = document.createElement("p"); subtitle.textContent = uploadedResumeName;
   titleWrap.append(title, subtitle);
-  const count = document.createElement("strong"); count.textContent = `${passed} of ${checks.length} checklist items found`;
+  const count = document.createElement("strong"); count.textContent = `${passed} of ${checks.length} review checks found`;
   summary.append(titleWrap, count); results.appendChild(summary);
+
+  const metrics = document.createElement("div"); metrics.className = "review-metrics";
+  [[wordCount, "Words"], [Math.ceil(wordCount / 450), "Approx. pages*"], [checks.length - passed, "Items to review"]].forEach(([value,label]) => {
+    const metric = document.createElement("div"); metric.className = "review-metric";
+    const strong = document.createElement("strong"); strong.textContent = String(value);
+    const small = document.createElement("span"); small.textContent = label;
+    metric.append(strong,small); metrics.appendChild(metric);
+  });
+  results.appendChild(metrics);
 
   const grid = document.createElement("div"); grid.className = "review-checks";
   checks.forEach(item => {
@@ -167,19 +181,52 @@ function renderResumeReview() {
   results.appendChild(grid);
 
   const suggestions = checks.filter(item => !item.ok).map(item => item.tip);
-  if (!suggestions.length) suggestions.push("Your resume contains the main sections checked. Review spelling, dates, relevance and formatting before applying.");
+  if (wordCount < 180) suggestions.unshift("This resume has relatively little text. Consider adding relevant projects, responsibilities and skills if they strengthen your application.");
+  if (wordCount > 900) suggestions.unshift("This resume is quite lengthy. Consider removing repeated or less relevant details while keeping important evidence.");
+  if (!suggestions.length) suggestions.push("The main checks were found. Review spelling, dates, relevance and formatting before applying.");
   const box = document.createElement("div"); box.className = "review-suggestions";
-  const heading = document.createElement("h4"); heading.textContent = "Suggestions to improve";
+  const heading = document.createElement("h4"); heading.textContent = "Recommended improvements";
   const list = document.createElement("ul");
   suggestions.forEach(suggestion => { const li = document.createElement("li"); li.textContent = suggestion; list.appendChild(li); });
   box.append(heading, list); results.appendChild(box);
 
   const jobText = fieldValue("ats-job-desc");
   if (jobText) appendKeywordMatch(results, text, jobText);
+  const reportButton = document.createElement("button");
+  reportButton.type = "button"; reportButton.className = "btn btn-outline review-download";
+  reportButton.textContent = "Download review report";
+  reportButton.addEventListener("click", () => downloadResumeReviewReport(checks, suggestions, wordCount));
+  results.appendChild(reportButton);
+
   const disclaimer = document.createElement("p"); disclaimer.className = "review-disclaimer";
-  disclaimer.textContent = "This is an automated text-based checklist, not a certified ATS score, professional recruiter assessment, grammar audit or guarantee of an interview. Scanned PDFs may not be readable. Check all suggestions yourself. Your file is processed in this browser and is not sent to our server by this review feature.";
+  disclaimer.textContent = "*Page count is a rough estimate. This is an automated text-based checklist, not a certified ATS score, recruiter assessment, grammar audit or interview guarantee. Some checks may miss differently worded sections. Verify all suggestions. Your file is processed in this browser and is not sent to our server by this review feature.";
   results.appendChild(disclaimer);
   if (window.lucide) window.lucide.createIcons();
+}
+
+function downloadResumeReviewReport(checks, suggestions, wordCount) {
+  const lines = [
+    "BRANDBLITZ RESUME REVIEW",
+    "File: " + uploadedResumeName,
+    "Word count: " + wordCount,
+    "",
+    "REVIEW CHECKS",
+    ...checks.map(item => (item.ok ? "[FOUND] " : "[REVIEW] ") + item.label),
+    "",
+    "SUGGESTED IMPROVEMENTS",
+    ...suggestions.map((item,index) => (index + 1) + ". " + item),
+    "",
+    "Note: This automated checklist is guidance only, not a certified ATS score or hiring prediction."
+  ];
+  const blob = new Blob([lines.join("\\n")], {type:"text/plain;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "resume-review-report.txt";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
 }
 
 function appendKeywordMatch(container, resumeText, jobText) {
