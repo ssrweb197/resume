@@ -669,3 +669,19 @@ button:disabled{opacity:.55;cursor:not-allowed}
 .user-name{font-size:.82rem;font-weight:700;color:#315bd6}.nav-container{gap:1rem}.nav-links{gap:1rem}.nav-links .nav-link{font-size:.87rem}.nav-actions{gap:.5rem}
 @media(max-width:900px){.home-hero-inner{grid-template-columns:1fr;gap:2rem}.hero-copy{text-align:center}.hero-copy .hero-title,.hero-copy .hero-subtitle{margin-left:auto;margin-right:auto}.hero-actions,.hero-proof{justify-content:center}.upload-card{justify-self:center}.steps-grid{grid-template-columns:1fr}.features-strip{grid-template-columns:1fr}.nav-links{display:none}.mobile-toggle{display:block!important}.nav-container{flex-wrap:wrap}.nav-links.mobile-open{display:flex;position:static;order:3;width:100%;background:#fff;border-radius:12px;padding:1rem;box-shadow:0 8px 24px rgba(20,40,80,.08);flex-direction:column}.nav-actions{margin-left:auto}.review-checks{grid-template-columns:1fr}}
 @media(max-width:520px){.home-hero{padding:2.8rem 1rem}.hero-copy .hero-title{font-size:2.45rem}.hero-actions{flex-direction:column}.hero-actions .btn{width:100%;justify-content:center}.upload-card{padding:1rem}.drop-zone{min-height:175px}.review-upload-inline{align-items:flex-start}.review-upload-inline .btn{width:100%;justify-content:center}}
+
+
+/* Simplified mobile header: brand + one menu control */
+@media (max-width: 900px) {
+  .nav-container{display:flex!important;flex-wrap:nowrap!important;align-items:center!important;justify-content:space-between!important;min-height:72px;padding:.75rem 1rem!important;gap:.75rem!important}
+  .brand-logo{flex:0 1 auto!important;width:auto!important;justify-content:flex-start!important;white-space:nowrap;font-size:clamp(.95rem,4.3vw,1.2rem)!important}
+  .brand-logo .logo-icon{width:42px;height:42px;flex:0 0 42px}
+  .nav-actions{width:auto!important;margin-left:auto;display:flex!important;flex:0 0 auto;align-items:center;justify-content:flex-end!important}
+  .nav-actions #openLogin,.nav-actions #openSignup,.nav-actions #logout,.nav-actions #userName,.nav-actions .user-name,.nav-actions .nav-create-btn{display:none!important}
+  .mobile-toggle{display:flex!important;align-items:center;justify-content:center;width:44px;height:44px;padding:0;border:1px solid #e4eaf4;border-radius:12px;background:#fff;color:#17233d;font-size:1.4rem}
+  #navLinks.mobile-open{display:flex!important;position:absolute!important;z-index:1000;top:calc(100% - 1px)!important;left:12px!important;right:12px!important;width:auto!important;order:initial!important;padding:12px!important;gap:3px!important;flex-direction:column!important;background:#fff!important;border:1px solid #e6edf7;border-radius:16px;box-shadow:0 18px 45px rgba(20,40,80,.15)}
+  #navLinks.mobile-open .nav-link{display:block;width:100%;padding:13px 14px;border-radius:10px;color:#253654;font-size:.95rem}
+  #navLinks.mobile-open .nav-link:hover{background:#f3f6fc}
+  #navLinks.mobile-open .mobile-auth-link{border-top:1px solid #edf1f7;margin-top:3px;color:#315bd6;font-weight:700}
+}
+@media (min-width:901px){.mobile-auth-link{display:none!important}}
