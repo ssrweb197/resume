@@ -52,28 +52,23 @@
         <span class="logo-text">BrandBlitz <span class="logo-accent">Resume AI</span></span>
       </a>
 
-      <nav class="nav-links" id="navLinks">
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
         <a href="#home" class="nav-link active" onclick="switchPage('home')">Home</a>
-        <a href="#builder" class="nav-link" onclick="switchPage('builder')">Resume Builder</a>
+        <a href="#ats-checker" class="nav-link" onclick="switchPage('ats-checker')">Resume Review</a>
+        <a href="#builder" class="nav-link" onclick="switchPage('builder')">Build Resume</a>
         <a href="#templates" class="nav-link" onclick="switchPage('templates')">Templates</a>
-        <a href="#ats-checker" class="nav-link" onclick="switchPage('ats-checker')">ATS Checker</a>
         <a href="#pricing" class="nav-link" onclick="switchPage('pricing')">Pricing</a>
       </nav>
 
       <div class="nav-actions">
-        <div class="nav-actions">
-
-    <button id="openLogin" class="btn btn-outline" type="button">Login</button>
-    <button id="openSignup" class="btn btn-primary" type="button">Sign Up</button>
-    <button id="logout" class="btn btn-outline" style="display:none;" type="button">Logout</button>
-    <span id="userName" style="margin-left:10px;font-weight:bold;color:#2563eb;"></span>
-    <button class="btn btn-primary" onclick="switchPage('builder')">
-        Create Resume
-    </button>
-
-</div>
-        <button class="mobile-toggle" id="mobileMenuBtn"><i data-lucide="menu"></i></button>
+        <button id="openLogin" class="btn btn-outline" type="button">Login</button>
+        <button id="openSignup" class="btn btn-primary" type="button">Sign Up</button>
+        <button id="logout" class="btn btn-outline" style="display:none;" type="button">Logout</button>
+        <span id="userName" class="user-name"></span>
+        <button class="btn btn-primary nav-create-btn" onclick="switchPage('builder')">Build Resume</button>
+        <button class="mobile-toggle" id="mobileMenuBtn" type="button" aria-label="Open menu" aria-expanded="false"><i data-lucide="menu"></i></button>
       </div>
+div>
     </div>
   </header>
 
@@ -82,62 +77,49 @@
 
     <!-- PAGE 1: HOME -->
     <section id="page-home" class="page-section active">
-      <!-- Hero Section -->
-      <div class="hero-section">
-        <div class="hero-content">
-          <div class="badge-pill">
-            <i data-lucide="zap"></i> Next-Gen AI Resume Engine 2.0
-          </div>
-          <h1 class="hero-title">Create a Professional <span class="gradient-text">ATS-Friendly Resume</span> in Minutes</h1>
-          <p class="hero-subtitle">Build a job-winning resume with AI. Powered by automated formatting, smart keyword insertion, and real-time ATS scoring.</p>
-
-          <div class="hero-cta-group">
-            <button class="btn btn-primary btn-lg" onclick="switchPage('builder')">
-              <i data-lucide="file-plus"></i> Build Resume Free
-            </button>
-            <button class="btn btn-secondary btn-lg" onclick="switchPage('templates')">
-              <i data-lucide="layout"></i> View Templates
-            </button>
-          </div>
-
-          <div class="hero-trust-note"><strong>Your details stay yours.</strong> Create and preview a resume using your own information.</div>
-         <div class="stat-divider"></div>
-            <div class="stat-item">
-              <span class="stat-number"></span>
-              <span class="stat-label">Tools for your next application</span>
+      <div class="home-hero">
+        <div class="home-hero-inner">
+          <div class="hero-copy">
+            <span class="eyebrow"><i data-lucide="sparkles"></i> YOUR CAREER, YOUR NEXT CHAPTER</span>
+            <h1 class="hero-title">A stronger resume starts <span class="gradient-text">right here.</span></h1>
+            <p class="hero-subtitle">Upload your existing resume and get a clear review, practical improvement tips, and a job-description keyword match — in minutes.</p>
+            <div class="hero-actions">
+              <button class="btn btn-primary btn-lg" onclick="document.getElementById('resumeUpload').click()"><i data-lucide="upload"></i> Review My Resume</button>
+              <button class="btn btn-secondary btn-lg" onclick="switchPage('builder')"><i data-lucide="file-plus-2"></i> Create a Resume</button>
             </div>
+            <div class="hero-proof"><span><i data-lucide="check-circle-2"></i> Simple feedback</span><span><i data-lucide="shield-check"></i> Private browser-side review</span><span><i data-lucide="file-check-2"></i> PDF & DOCX</span></div>
+          </div>
+          <div class="upload-card" id="uploadCard">
+            <div class="upload-card-top"><div class="upload-icon"><i data-lucide="file-up"></i></div><div><strong>Start with your resume</strong><p>We’ll review it automatically</p></div></div>
+            <label class="drop-zone" id="resumeDropZone" for="resumeUpload" tabindex="0">
+              <i data-lucide="cloud-upload"></i>
+              <strong>Drop your resume here</strong>
+              <span>or <u>browse files</u></span>
+              <small>PDF, DOCX or TXT · Maximum 8 MB</small>
+            </label>
+            <input id="resumeUpload" type="file" accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain" hidden>
+            <p class="upload-privacy"><i data-lucide="lock"></i> File text is read in your browser for this basic review. It is not uploaded to our server.</p>
+            <p class="upload-status" id="uploadStatus" role="status" aria-live="polite">No file selected yet.</p>
           </div>
         </div>
       </div>
 
-      <!-- Features Section -->
-      <div class="container section-padding">
-        <div class="section-header center">
-          <h2>Everything You Need to Land the Interview</h2>
-          <p>Powered by intelligent design and strict ATS compliance standards.</p>
-        </div>
-
-        <div class="grid grid-3">
-          <div class="card feature-card">
-            <div class="feature-icon"><i data-lucide="cpu"></i></div>
-            <h3>AI Summary & Bullets</h3>
-            <p>Generate quantifiable, punchy action statements and tailored summary paragraphs in seconds.</p>
+      <div class="container home-content">
+        <section class="how-section">
+          <div class="section-heading"><span class="eyebrow">HOW IT WORKS</span><h2>From upload to a better resume</h2><p>Three simple steps. No confusing menus.</p></div>
+          <div class="steps-grid">
+            <article class="step-card"><span class="step-number">01</span><div class="step-icon"><i data-lucide="upload-cloud"></i></div><h3>Upload</h3><p>Choose your existing PDF, Word document or text resume.</p></article>
+            <article class="step-card"><span class="step-number">02</span><div class="step-icon"><i data-lucide="scan-search"></i></div><h3>Get reviewed</h3><p>Check key sections, contact details, readability and useful keywords.</p></article>
+            <article class="step-card"><span class="step-number">03</span><div class="step-icon"><i data-lucide="wand-sparkles"></i></div><h3>Improve</h3><p>Follow practical suggestions or open the resume builder to make changes.</p></article>
           </div>
-
-          <div class="card feature-card">
-            <div class="feature-icon"><i data-lucide="check-circle-2"></i></div>
-            <h3>Real-Time ATS Checker</h3>
-            <p>Compare your resume directly against targeted job descriptions to eliminate hiring parser errors.</p>
-          </div>
-
-          <div class="card feature-card">
-            <div class="feature-icon"><i data-lucide="file-text"></i></div>
-            <h3>Smart Cover Letters</h3>
-            <p>Instantly align cover letter tone with targeted job roles while emphasizing key career wins.</p>
-          </div>
-        </div>
+        </section>
+        <section class="features-strip">
+          <div><i data-lucide="clipboard-check"></i><strong>Resume health check</strong><span>Spot missing basics and weak sections.</span></div>
+          <div><i data-lucide="target"></i><strong>Job keyword match</strong><span>Compare your resume with a job description.</span></div>
+          <div><i data-lucide="file-pen-line"></i><strong>Resume builder</strong><span>Create and export a clean resume.</span></div>
+        </section>
+        <p class="honest-note">The automatic review is a guidance tool, not an employer ATS score or a promise of an interview. Your resume is not rewritten or sent anywhere automatically.</p>
       </div>
-
     </section>
 
     <!-- PAGE 2: RESUME BUILDER -->
@@ -342,32 +324,23 @@
       </div>
     </section>
 
-    <!-- PAGE 4: ATS CHECKER -->
+    <!-- PAGE 4: RESUME REVIEW -->
     <section id="page-ats-checker" class="page-section">
-      <div class="container section-padding">
-        <div class="section-header center">
-          <h2>Instant ATS Keyword & Grammar Auditor</h2>
-          <p>Upload your text or paste job requirements to evaluate compatibility scores.</p>
+      <div class="container section-padding review-page">
+        <div class="section-heading"><span class="eyebrow">RESUME REVIEW</span><h2>Understand what your resume needs</h2><p>Upload a resume for an automatic checklist, then optionally add a job description for keyword comparison.</p></div>
+        <div class="review-upload-inline card">
+          <div><h3>1. Upload your resume</h3><p>PDF, DOCX or TXT · Maximum 8 MB</p></div>
+          <button class="btn btn-primary" onclick="document.getElementById('resumeUpload').click()"><i data-lucide="upload"></i> Choose Resume</button>
+          <span id="reviewFileName" class="review-file-name">No resume uploaded</span>
         </div>
-
-        <div class="grid grid-2">
-          <div class="card">
-            <h3>Paste Job Description</h3>
-            <textarea id="ats-job-desc" rows="8" class="form-control" placeholder="Paste target job requirements here..."></textarea>
-            <button class="btn btn-primary margin-top" onclick="runATSCheck()">
-              <i data-lucide="cpu"></i> Analyze Match Score
-            </button>
-          </div>
-
-          <div class="card ats-results-card">
-            <h3>Optimization Score</h3>
-            <div class="ats-gauge-container">
-              <div class="ats-score-circle" id="ats-score-display">0%</div>
-            </div>
-            <div id="ats-feedback" class="ats-feedback-list">
-              <p class="placeholder-text">Click "Analyze Match Score" to run keyword extraction.</p>
-            </div>
-          </div>
+        <div class="card job-description-card">
+          <h3>2. Add a job description (optional)</h3>
+          <p>Paste the role requirements to see which terms appear in your resume.</p>
+          <textarea id="ats-job-desc" rows="6" class="form-control" placeholder="Paste the job description here..."></textarea>
+          <button class="btn btn-primary margin-top" id="runReviewButton" onclick="runATSCheck()" disabled><i data-lucide="scan-search"></i> Review Resume</button>
+        </div>
+        <div id="resumeReviewResults" class="review-results card" aria-live="polite">
+          <div class="review-empty"><i data-lucide="file-search"></i><h3>Your review will appear here</h3><p>Upload a resume to see section checks and improvement suggestions.</p></div>
         </div>
       </div>
     </section>
