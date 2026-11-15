@@ -134,20 +134,19 @@ async function handleResumeFile(file) {
 function renderResumeReview() {
   if (!uploadedResumeText) return;
   const text = uploadedResumeText;
-  const lower = text.toLowerCase();
   const words = text.match(/[A-Za-z0-9+#.-]+/g) || [];
   const wordCount = words.length;
   const checks = [
-    { label: "Email address", ok: /[\\w.+-]+@[\\w.-]+\\.[a-z]{2,}/i.test(text), tip: "Add a professional email address." },
-    { label: "Phone number", ok: /(?:\\+?\\d[\\d\\s().-]{7,}\\d)/.test(text), tip: "Add a reachable phone number with country code if applying internationally." },
-    { label: "Professional summary / profile", ok: /\\b(summary|profile|objective|about me|professional statement)\\b/i.test(text), tip: "Add a short professional summary tailored to the roles you want." },
-    { label: "Work experience", ok: /\\b(experience|employment|work history|professional history|internship)\\b/i.test(text), tip: "Include relevant work experience, internships or projects." },
-    { label: "Education", ok: /\\b(education|qualification|university|college|degree|bachelor|master)\\b/i.test(text), tip: "Include your education, institution and graduation year." },
-    { label: "Skills", ok: /\\b(skills|technical skills|core competencies|key competencies)\\b/i.test(text), tip: "Add a clearly labelled skills section with relevant skills." },
-    { label: "Projects or portfolio", ok: /\\b(projects?|portfolio|github|linkedin)\\b/i.test(text), tip: "Add relevant projects, a portfolio or professional profile link when useful for your field." },
-    { label: "Dates or time periods", ok: /\\b(19|20)\\d{2}\\b/.test(text) || /\\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\\b/i.test(text), tip: "Check that education and employment dates are clear and consistent." },
-    { label: "Achievement-focused language", ok: /\\b(achieved|improved|reduced|increased|delivered|built|managed|led|created|saved|launched|designed|automated)\\b/i.test(text), tip: "Where accurate, start bullet points with strong action verbs and explain your contribution." },
-    { label: "Measurable results", ok: /\\b\\d+(?:\\.\\d+)?\\s*(%|percent|users|customers|projects|hours|days|weeks|months|years|\\+|k|m)\\b/i.test(text) || /\\b(increased|reduced|saved|grew|improved)\\b.{0,55}\\b\\d+/i.test(text), tip: "Add truthful numbers or measurable outcomes to demonstrate impact, where possible." }
+    { label: "Email address", ok: /[\w.+-]+@[\w.-]+\.[a-z]{2,}/i.test(text), tip: "Add a professional email address." },
+    { label: "Phone number", ok: /(?:\+?\d[\d\s().-]{7,}\d)/.test(text), tip: "Add a reachable phone number with country code if applying internationally." },
+    { label: "Professional summary / profile", ok: /\b(summary|profile|objective|about me|professional statement)\b/i.test(text), tip: "Add a short professional summary tailored to the roles you want." },
+    { label: "Work experience", ok: /\b(experience|employment|work history|professional history|internship)\b/i.test(text), tip: "Include relevant work experience, internships or projects." },
+    { label: "Education", ok: /\b(education|qualification|university|college|degree|bachelor|master)\b/i.test(text), tip: "Include your education, institution and graduation year." },
+    { label: "Skills", ok: /\b(skills|technical skills|core competencies|key competencies)\b/i.test(text), tip: "Add a clearly labelled skills section with relevant skills." },
+    { label: "Projects or portfolio", ok: /\b(projects?|portfolio|github|linkedin)\b/i.test(text), tip: "Add relevant projects, a portfolio or professional profile link when useful for your field." },
+    { label: "Dates or time periods", ok: /\b(19|20)\d{2}\b/.test(text) || /\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\b/i.test(text), tip: "Check that education and employment dates are clear and consistent." },
+    { label: "Achievement-focused language", ok: /\b(achieved|improved|reduced|increased|delivered|built|managed|led|created|saved|launched|designed|automated)\b/i.test(text), tip: "Where accurate, start bullet points with strong action verbs and explain your contribution." },
+    { label: "Measurable results", ok: /\b\d+(?:\.\d+)?\s*(%|percent|users|customers|projects|hours|days|weeks|months|years|\+|k|m)\b/i.test(text) || /\b(increased|reduced|saved|grew|improved)\b.{0,55}\b\d+/i.test(text), tip: "Add truthful numbers or measurable outcomes to demonstrate impact, where possible." }
   ];
   const passed = checks.filter(item => item.ok).length;
   const results = document.getElementById("resumeReviewResults");
@@ -218,7 +217,7 @@ function downloadResumeReviewReport(checks, suggestions, wordCount) {
     "",
     "Note: This automated checklist is guidance only, not a certified ATS score or hiring prediction."
   ];
-  const blob = new Blob([lines.join("\\n")], {type:"text/plain;charset=utf-8"});
+  const blob = new Blob([lines.join("\n")], {type:"text/plain;charset=utf-8"});
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
