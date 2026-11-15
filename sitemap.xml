@@ -16,6 +16,11 @@
     <priority>0.4</priority>
   </url>
   <url>
+    <loc>https://resume-97s.pages.dev/terms-and-conditions.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
     <loc>https://resume-97s.pages.dev/contact-us.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
