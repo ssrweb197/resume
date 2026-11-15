@@ -117,7 +117,7 @@ function runATSCheck() {
 
   const stopWords = new Set(("the and for with you your our are was were this that from have has had will can all any not but job role work team skills experience ability required preferred responsibilities qualifications about into using use used their they them who what when where how also more less than then such other including").split(" "));
   const terms = (jobText.toLowerCase().match(/[a-z][a-z0-9+#.-]{2,}/g) || []);
-  const uniqueTerms = [...new Set(terms.filter(term => !stopWords.has(term) && !/^\\d+$/.test(term)))];
+  const uniqueTerms = [...new Set(terms.filter(term => !stopWords.has(term) && !/^\d+$/.test(term)))];
   if (!uniqueTerms.length) {
     feedback.textContent = "The job description does not contain enough readable keywords to compare.";
     scoreDisplay.textContent = "—";
