@@ -4,13 +4,6 @@
  * No sample candidate data or simulated AI/ATS claims are inserted.
  */
 
-const emptyResume = {
-  personal: { fullName: "", title: "", email: "", phone: "", location: "", summary: "" },
-  experience: { company: "", role: "", duration: "", description: "" },
-  education: { degree: "", school: "", year: "" },
-  skills: []
-};
-
 document.addEventListener("DOMContentLoaded", () => {
   if (window.lucide) window.lucide.createIcons();
   updateResumeState();
