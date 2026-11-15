@@ -685,3 +685,12 @@ button:disabled{opacity:.55;cursor:not-allowed}
   #navLinks.mobile-open .mobile-auth-link{border-top:1px solid #edf1f7;margin-top:3px;color:#315bd6;font-weight:700}
 }
 @media (min-width:901px){.mobile-auth-link{display:none!important}}
+
+
+/* Resume review report and metric cards */
+.review-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.7rem;margin:0 0 1rem}
+.review-metric{display:flex;flex-direction:column;gap:.2rem;padding:.85rem 1rem;background:#f5f8ff;border:1px solid #e6edf8;border-radius:13px}
+.review-metric strong{font-size:1.35rem;color:#243f83}.review-metric span{font-size:.75rem;color:#71809a}
+.review-download{margin-top:1rem}
+.drag-active{border-color:#315bd6!important;background:#edf4ff!important}
+@media(max-width:520px){.review-metrics{gap:.45rem}.review-metric{padding:.7rem .55rem}.review-metric strong{font-size:1.15rem}.review-metric span{font-size:.68rem}}
