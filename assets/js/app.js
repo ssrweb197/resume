@@ -1,223 +1,171 @@
-console.log("Resume Save Module Loaded");
 /**
  * BRANDBLITZ RESUME AI - CORE APPLICATION LOGIC
- * Handlers: Router, Live Synchronized State Engine, ATS Scanner, & PDF Exporter
+ * Client-side resume preview, navigation, PDF printing and transparent keyword comparison.
+ * No sample candidate data or simulated AI/ATS claims are inserted.
  */
 
-// Global Application State Object
-const state = {
-  personal: {
-    fullName: "Alex Morgan",
-    title: "Senior Full Stack Engineer",
-    email: "alex.morgan@example.com",
-    phone: "+91 98765 43210",
-    location: "Bangalore, India",
-    summary: "Passionate Full Stack Engineer with 6+ years of experience building scalable web applications using React, Node.js, and cloud platforms. Proven track record of improving site latency by 40% and leading high-performing software teams."
-  },
-  experience: {
-    company: "TechCorp Solutions",
-    role: "Lead Developer",
-    duration: "2021 - Present",
-    description: "• Architected microservices architecture handling over 2M daily API requests.\n• Spearheaded frontend migration to modern reactive frameworks, boosting lighthouse score to 98.\n• Mentored 8 junior developers and instituted automated testing pipelines."
-  },
-  education: {
-    degree: "B.Tech in Computer Science",
-    school: "Indian Institute of Technology",
-    year: "2016 - 2020"
-  },
-  skills: ["JavaScript", "React", "Node.js", "TypeScript", "PostgreSQL", "AWS", "GraphQL", "Docker"]
+const emptyResume = {
+  personal: { fullName: "", title: "", email: "", phone: "", location: "", summary: "" },
+  experience: { company: "", role: "", duration: "", description: "" },
+  education: { degree: "", school: "", year: "" },
+  skills: []
 };
 
-// Initialize Application Engine
 document.addEventListener("DOMContentLoaded", () => {
-  // Render Lucide icons safely
-  if (window.lucide) {
-    lucide.createIcons();
-  }
-  
-  // Initial sync from input form fields to live preview canvas
+  if (window.lucide) window.lucide.createIcons();
   updateResumeState();
+
+  const menuButton = document.getElementById("mobileMenuBtn");
+  const navLinks = document.getElementById("navLinks");
+  if (menuButton && navLinks) {
+    menuButton.addEventListener("click", () => {
+      const opened = navLinks.classList.toggle("mobile-open");
+      menuButton.setAttribute("aria-expanded", String(opened));
+    });
+    navLinks.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("mobile-open");
+        menuButton.setAttribute("aria-expanded", "false");
+      });
+    });
+  }
 });
 
-/**
- * Single-Page Navigation Router
- * @param {string} pageId - Target page section identifier
- */
 function switchPage(pageId) {
-  const sections = document.querySelectorAll('.page-section');
-  const navLinks = document.querySelectorAll('.nav-link');
-
-  sections.forEach(sec => sec.classList.remove('active'));
-  navLinks.forEach(link => link.classList.remove('active'));
-
-  const targetPage = document.getElementById(`page-${pageId}`);
-  if (targetPage) {
-    targetPage.classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  // Highlight active menu link
-  const activeLink = document.querySelector(`.nav-link[href="#${pageId}"]`);
-  if (activeLink) {
-    activeLink.classList.add('active');
-  }
+  const target = document.getElementById(`page-${pageId}`);
+  if (!target) return false;
+  document.querySelectorAll(".page-section").forEach(section => {
+    section.classList.toggle("active", section === target);
+  });
+  document.querySelectorAll(".nav-link").forEach(link => {
+    link.classList.toggle("active", link.getAttribute("href") === `#${pageId}`);
+  });
+  document.getElementById("navLinks")?.classList.remove("mobile-open");
+  if (window.history?.replaceState) window.history.replaceState(null, "", `#${pageId}`);
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  return false;
 }
 
-/**
- * Tab Navigation in Resume Builder Panel
- * @param {number} stepIndex - Numerical step index (1-4)
- */
 function setBuilderStep(stepIndex) {
-  const tabs = document.querySelectorAll('.b-tab');
-  const steps = document.querySelectorAll('.builder-step');
-
-  tabs.forEach((tab, idx) => {
-    tab.classList.toggle('active', idx === stepIndex - 1);
+  document.querySelectorAll(".b-tab").forEach((tab, index) => {
+    tab.classList.toggle("active", index === stepIndex - 1);
   });
-
-  steps.forEach((step, idx) => {
-    step.classList.toggle('active', idx === stepIndex - 1);
+  document.querySelectorAll(".builder-step").forEach((step, index) => {
+    step.classList.toggle("active", index === stepIndex - 1);
   });
 }
 
-/**
- * State Synchronizer - Flushes user inputs directly into canvas elements
- */
+function fieldValue(id) {
+  return document.getElementById(id)?.value?.trim() || "";
+}
+
+function setText(id, value, placeholder) {
+  const node = document.getElementById(id);
+  if (node) node.textContent = value || placeholder;
+}
+
 function updateResumeState() {
-  // Read inputs safely
-  const getValue = (id, fallback) => {
-    const el = document.getElementById(id);
-    return el ? el.value : fallback;
-  };
+  setText("pv-name", fieldValue("input-fullname"), "Your Name");
+  setText("pv-title", fieldValue("input-title"), "Your Professional Title");
+  setText("pv-email", fieldValue("input-email"), "");
+  setText("pv-phone", fieldValue("input-phone"), "");
+  setText("pv-location", fieldValue("input-location"), "");
+  setText("pv-summary", fieldValue("input-summary"), "");
+  setText("pv-company", fieldValue("input-company"), "");
+  setText("pv-role", fieldValue("input-role"), "");
+  setText("pv-duration", fieldValue("input-duration"), "");
+  setText("pv-exp-desc", fieldValue("input-exp-desc"), "");
+  setText("pv-school", fieldValue("input-school"), "");
+  setText("pv-edu-year", fieldValue("input-edu-year"), "");
+  setText("pv-degree", fieldValue("input-degree"), "");
 
-  // Extract variables
-  const name = getValue('input-fullname', state.personal.fullName);
-  const title = getValue('input-title', state.personal.title);
-  const email = getValue('input-email', state.personal.email);
-  const phone = getValue('input-phone', state.personal.phone);
-  const location = getValue('input-location', state.personal.location);
-  const summary = getValue('input-summary', state.personal.summary);
-
-  const company = getValue('input-company', state.experience.company);
-  const role = getValue('input-role', state.experience.role);
-  const duration = getValue('input-duration', state.experience.duration);
-  const expDesc = getValue('input-exp-desc', state.experience.description);
-
-  const degree = getValue('input-degree', state.education.degree);
-  const school = getValue('input-school', state.education.school);
-  const eduYear = getValue('input-edu-year', state.education.year);
-
-  const rawSkills = getValue('input-skills', state.skills.join(', '));
-
-  // Write variables back into DOM nodes
-  document.getElementById('pv-name').innerText = name || 'Your Name';
-  document.getElementById('pv-title').innerText = title || 'Target Job Title';
-  document.getElementById('pv-email').innerText = email || 'email@domain.com';
-  document.getElementById('pv-phone').innerText = phone || '+00 00000 00000';
-  document.getElementById('pv-location').innerText = location || 'City, Country';
-  document.getElementById('pv-summary').innerText = summary || 'Write your professional summary here...';
-
-  document.getElementById('pv-company').innerText = company || 'Company Name';
-  document.getElementById('pv-role').innerText = role || 'Role Title';
-  document.getElementById('pv-duration').innerText = duration || 'Duration';
-  document.getElementById('pv-exp-desc').innerText = expDesc || 'Key achievements go here...';
-
-  document.getElementById('pv-school').innerText = school || 'University Name';
-  document.getElementById('pv-edu-year').innerText = eduYear || 'Graduation Period';
-  document.getElementById('pv-degree').innerText = degree || 'Degree Earned';
-
-  // Render Skill Chips
-  const skillsContainer = document.getElementById('pv-skills');
+  const skillsContainer = document.getElementById("pv-skills");
   if (skillsContainer) {
-    skillsContainer.innerHTML = '';
-    const skillList = rawSkills.split(',').map(s => s.trim()).filter(s => s.length > 0);
-    skillList.forEach(sk => {
-      const tag = document.createElement('span');
-      tag.className = 'pv-tag';
-      tag.innerText = sk;
+    skillsContainer.replaceChildren();
+    fieldValue("input-skills").split(",").map(skill => skill.trim()).filter(Boolean).forEach(skill => {
+      const tag = document.createElement("span");
+      tag.className = "pv-tag";
+      tag.textContent = skill;
       skillsContainer.appendChild(tag);
     });
   }
 }
 
-/**
- * Mock AI Assistant Helper for Summary Optimization
- */
+// AI writing is not connected to an AI service yet; do not fabricate generated content.
 function triggerAISummary() {
-  const summaryField = document.getElementById('input-summary');
-  if (!summaryField) return;
-
-  summaryField.value = "Results-driven Full Stack Engineer with 6+ years of expertise delivering cloud-native web systems. Recognized for optimizing database queries reducing response latencies by 40% and guiding cross-functional agile teams.";
-  
-  updateResumeState();
-  
-  // Quick Visual Feedback
-  summaryField.style.borderColor = '#2563eb';
-  setTimeout(() => {
-    summaryField.style.borderColor = '';
-  }, 1000);
+  window.alert("AI writing assistance is not connected yet. Please write or paste your own professional summary for now.");
 }
 
-/**
- * Native Browser Print/PDF Download Trigger
- */
 function exportPDF() {
+  const name = fieldValue("input-fullname");
+  if (!name) {
+    window.alert("Please enter your name before exporting your resume.");
+    document.getElementById("input-fullname")?.focus();
+    return;
+  }
   window.print();
 }
 
-/**
- * Simulated ATS Match Score Logic
- */
 function runATSCheck() {
-  const descText = document.getElementById('ats-job-desc').value.trim();
-  const scoreDisplay = document.getElementById('ats-score-display');
-  const feedbackContainer = document.getElementById('ats-feedback');
+  const jobText = fieldValue("ats-job-desc");
+  const scoreDisplay = document.getElementById("ats-score-display");
+  const feedback = document.getElementById("ats-feedback");
+  if (!jobText) {
+    window.alert("Please paste the target job description first.");
+    return;
+  }
+  if (!scoreDisplay || !feedback) return;
 
-  if (!descText) {
-    alert("Please paste job description requirements first!");
+  const resumeText = [
+    fieldValue("input-fullname"), fieldValue("input-title"), fieldValue("input-summary"),
+    fieldValue("input-company"), fieldValue("input-role"), fieldValue("input-exp-desc"),
+    fieldValue("input-degree"), fieldValue("input-school"), fieldValue("input-skills")
+  ].join(" ").toLowerCase();
+
+  const stopWords = new Set(("the and for with you your our are was were this that from have has had will can all any not but job role work team skills experience ability required preferred responsibilities qualifications about into using use used their they them who what when where how also more less than then such other including").split(" "));
+  const terms = (jobText.toLowerCase().match(/[a-z][a-z0-9+#.-]{2,}/g) || []);
+  const uniqueTerms = [...new Set(terms.filter(term => !stopWords.has(term) && !/^\\d+$/.test(term)))];
+  if (!uniqueTerms.length) {
+    feedback.textContent = "The job description does not contain enough readable keywords to compare.";
+    scoreDisplay.textContent = "—";
     return;
   }
 
-  // Calculate simulated compatibility match
-  const keywords = ["react", "javascript", "node.js", "aws", "agile", "leadership", "docker", "api"];
-  let matches = 0;
-  
-  keywords.forEach(kw => {
-    if (descText.toLowerCase().includes(kw)) {
-      matches++;
-    }
-  });
+  const matched = uniqueTerms.filter(term => resumeText.includes(term));
+  const missing = uniqueTerms.filter(term => !resumeText.includes(term));
+  const score = Math.round((matched.length / uniqueTerms.length) * 100);
+  scoreDisplay.textContent = `${score}%`;
+  feedback.replaceChildren();
 
-  const calculatedScore = Math.min(Math.round((matches / keywords.length) * 100) + 25, 95);
+  const note = document.createElement("p");
+  note.textContent = `Keyword overlap: ${matched.length} of ${uniqueTerms.length} unique job-description terms were found in the resume fields.`;
+  feedback.appendChild(note);
 
-  // Update UI display
-  scoreDisplay.innerText = `${calculatedScore}%`;
-  
-  feedbackContainer.innerHTML = `
-    <div style="margin-top: 1rem;">
-      <p style="font-weight:600; color: #2563eb; margin-bottom: 0.5rem;">Key Findings:</p>
-      <ul style="font-size:0.9rem; padding-left:1.2rem; color:#475569;">
-        <li>Matched key technologies: React, JavaScript, AWS.</li>
-        <li>Suggested additions: Consider explicitly adding continuous integration (CI/CD) terms.</li>
-        <li>Formatting: Standard standard heading tags verified. Parsing readiness is High.</li>
-      </ul>
-    </div>
-  `;
+  const addList = (heading, items) => {
+    const title = document.createElement("p");
+    title.style.cssText = "font-weight:600;color:#2563eb;margin:.8rem 0 .3rem";
+    title.textContent = heading;
+    feedback.appendChild(title);
+    const list = document.createElement("ul");
+    list.style.cssText = "font-size:.9rem;padding-left:1.2rem;color:#475569";
+    (items.length ? items.slice(0, 18) : ["None identified"]).forEach(item => {
+      const li = document.createElement("li");
+      li.textContent = item;
+      list.appendChild(li);
+    });
+    feedback.appendChild(list);
+  };
+  addList("Matched terms", matched);
+  addList("Terms to consider adding only if they truthfully describe your experience", missing);
+  const disclaimer = document.createElement("p");
+  disclaimer.style.cssText = "font-size:.78rem;color:#64748b;margin-top:.8rem";
+  disclaimer.textContent = "This is a basic keyword-overlap check, not a real ATS system, hiring prediction, grammar audit, or guarantee of an interview. Review every suggested term for accuracy.";
+  feedback.appendChild(disclaimer);
 }
-  // Make functions available globally
+
 window.switchPage = switchPage;
 window.setBuilderStep = setBuilderStep;
 window.updateResumeState = updateResumeState;
 window.triggerAISummary = triggerAISummary;
 window.exportPDF = exportPDF;
 window.runATSCheck = runATSCheck;
-
-
-// Responsive mobile navigation added for the updated header.
-document.addEventListener("DOMContentLoaded", () => {
-  const menuButton = document.getElementById("mobileMenuBtn");
-  const navLinks = document.getElementById("navLinks");
-  if (menuButton && navLinks) {
-    menuButton.addEventListener("click", () => navLinks.classList.toggle("mobile-open"));
-  }
-});
