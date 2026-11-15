@@ -1,4 +1,4 @@
-# BrandBlitz Resume AI
+# ResumeBuild
 
 A browser-based resume builder and resume review tool with an optional authenticated AI rewrite endpoint.
 
@@ -20,7 +20,7 @@ Add `OPENAI_API_KEY` as an encrypted Secret. Never add it to frontend JavaScript
 
 ### Important Firebase project check
 
-The current `firebase-config.js` points to project ID `billvault-d7976`. Before setting `FIREBASE_PROJECT_ID`, confirm in Firebase Console that this is the intended Firebase project for BrandBlitz Resume AI and that its Authentication providers are configured for this website. If it is a different product's project, create a dedicated Firebase project and update the web configuration and Cloudflare variable together. Do not guess or reuse another product's user database.
+The current `firebase-config.js` points to project ID `billvault-d7976`. Before setting `FIREBASE_PROJECT_ID`, confirm in Firebase Console that this is the intended Firebase project for ResumeBuild and that its Authentication providers are configured for this website. If it is a different product's project, create a dedicated Firebase project and update the web configuration and Cloudflare variable together. Do not guess or reuse another product's user database.
 
 ### User flow and privacy
 
