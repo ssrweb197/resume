@@ -116,7 +116,21 @@ export async function onRequestPost({ request, env }) {
   }
   const result = await apiResponse.json().catch(() => ({}));
   if (!apiResponse.ok) {
-    const message = apiResponse.status === 429 ? "AI service is busy. Please wait and try again." : "AI rewrite failed. Please try again later.";
+    const apiError = result.error || {};
+    const errorCode = String(apiError.code || "");
+    const errorType = String(apiError.type || "");
+    let message = "AI rewrite failed. Please try again later.";
+    if (apiResponse.status === 429 && (errorCode === "insufficient_quota" || errorType === "insufficient_quota")) {
+      message = "OpenAI API quota or billing limit reached. Please check API billing and usage limits.";
+    } else if (apiResponse.status === 429) {
+      message = "OpenAI API rate limit reached. Please wait a minute and try again.";
+    } else if (apiResponse.status === 401) {
+      message = "OpenAI API key was rejected. Please check the OPENAI_API_KEY secret in Cloudflare.";
+    } else if (apiResponse.status === 403) {
+      message = "OpenAI API access is not enabled for this project or model. Please check API project permissions.";
+    } else if (apiResponse.status === 400) {
+      message = "OpenAI rejected the rewrite request. Please try again with a shorter resume.";
+    }
     return json({ error: message }, apiResponse.status === 429 ? 429 : 502, origin);
   }
   const outputText = (result.output || []).flatMap(item => item.content || []).find(item => item.type === "output_text")?.text;
