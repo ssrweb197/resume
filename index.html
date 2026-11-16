@@ -97,8 +97,14 @@
             <p class="hero-subtitle">Upload your existing resume and get a clear review, practical improvement tips, and a job-description keyword match — in minutes.</p>
             <div class="hero-actions">
               <div class="hero-primary-actions">
-                <button class="btn btn-primary btn-lg" onclick="document.getElementById('resumeUpload').click()"><i data-lucide="upload"></i> Review My Resume</button>
-                <button class="btn btn-secondary btn-lg" onclick="switchPage('builder-start')"><i data-lucide="file-plus-2"></i> Create a Resume</button>
+                <button class="btn btn-primary btn-lg hero-action-card" onclick="document.getElementById('resumeUpload').click()">
+                  <span class="hero-action-title">Review My Resume</span>
+                  <span class="hero-action-subtitle">Upload &amp; Get Resume Feedback</span>
+                </button>
+                <button class="btn btn-secondary btn-lg hero-action-card" onclick="switchPage('builder-start')">
+                  <span class="hero-action-title">Create a Resume</span>
+                  <span class="hero-action-subtitle">Build a New Resume or Import Existing Resume</span>
+                </button>
               </div>
               <div class="hero-account-actions">
                 <button class="btn btn-outline btn-lg" type="button" onclick="document.getElementById('openLogin').click()"><i data-lucide="log-in"></i> Login</button>
