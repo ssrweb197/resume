@@ -15,6 +15,8 @@ async function saveResume() {
     company: v("input-company"), role: v("input-role"), duration: v("input-duration"),
     experience: v("input-exp-desc"), degree: v("input-degree"), school: v("input-school"),
     educationYear: v("input-edu-year"),
+    projects: v("input-projects"), achievements: v("input-achievements"), links: v("input-links"),
+    selectedTemplate: window.selectedResumeTemplate || "modern",
     skills: v("input-skills").split(",").map(x => x.trim()).filter(Boolean),
     uid: user.uid, ownerEmail: user.email || "",
     createdAt: serverTimestamp(), updatedAt: serverTimestamp()
