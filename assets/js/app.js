@@ -222,7 +222,15 @@ async function handleResumeFile(file) {
       for (let pageNo = 1; pageNo <= pdf.numPages; pageNo++) {
         const page = await pdf.getPage(pageNo);
         const content = await page.getTextContent();
-        pages.push(content.items.map(item => item.str).join(" "));
+        const rows = [];
+        content.items.forEach(item => {
+          const y = Math.round(item.transform?.[5] || 0);
+          let row = rows.find(entry => Math.abs(entry.y - y) <= 2);
+          if (!row) { row = { y, parts: [] }; rows.push(row); }
+          row.parts.push(item.str);
+        });
+        rows.sort((a, b) => b.y - a.y);
+        pages.push(rows.map(row => row.parts.join(" ").trim()).filter(Boolean).join("\n"));
       }
       text = pages.join("\n");
     } else {
