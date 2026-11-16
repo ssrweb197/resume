@@ -6,6 +6,59 @@
 let uploadedResumeText = "";
 let uploadedResumeName = "";
 
+let builderUploadMode = false;
+function startNewResume() {
+  builderUploadMode = false;
+  switchPage("builder");
+  setBuilderStep(1);
+}
+function startBuilderUpload() {
+  builderUploadMode = true;
+  const status = document.getElementById("builderUploadStatus");
+  if (status) status.textContent = "Choose your PDF, DOCX or TXT resume (maximum 8 MB).";
+  document.getElementById("resumeUpload")?.click();
+}
+function extractResumeSection(text, headings) {
+  const heading = headings.join("|");
+  const pattern = new RegExp("(?:^|\\n)\\s*(?:" + heading + ")\\s*[:\\-]?\\s*([\\s\\S]*?)(?=\\n\\s*(?:professional summary|summary|profile|objective|work experience|experience|employment|work history|education|academic|skills|technical skills|projects|certifications|achievements|languages|interests|references)\\s*[:\\-]?\\s*(?:\\n|$)|$)", "i");
+  const match = text.match(pattern);
+  return match ? match[1].trim() : "";
+}
+function importResumeIntoBuilder(text) {
+  const ids = ["input-fullname","input-title","input-email","input-phone","input-location","input-summary","input-company","input-role","input-duration","input-exp-desc","input-degree","input-school","input-edu-year","input-skills","input-projects","input-achievements","input-links"];
+  const hasExisting = ids.some(id => (document.getElementById(id)?.value || "").trim());
+  if (hasExisting && !window.confirm("Importing this resume will replace the current builder fields. Continue?")) return false;
+  const lines = text.split(/\n+/).map(line => line.trim()).filter(Boolean);
+  const headingOnly = /^(professional summary|summary|profile|objective|work experience|experience|employment|work history|education|academic background|skills|technical skills|projects|certifications|achievements|languages|references|contact|personal details)$/i;
+  const firstLine = lines.find(line => !headingOnly.test(line) && !/^[\w.+-]+@[\w.-]+\.[a-z]{2,}$/i.test(line) && !/^https?:\/\//i.test(line)) || "";
+  const email = (text.match(/[\w.+-]+@[\w.-]+\.[a-z]{2,}/i) || [])[0] || "";
+  const phone = (text.match(/(?:\+?\d[\d\s().-]{7,}\d)/) || [])[0] || "";
+  const summary = extractResumeSection(text, ["professional summary","summary","profile","objective"]);
+  const experience = extractResumeSection(text, ["work experience","experience","employment","work history"]);
+  const education = extractResumeSection(text, ["education","academic background"]);
+  const skills = extractResumeSection(text, ["technical skills","skills","core competencies"]);
+  const projects = extractResumeSection(text, ["projects","project experience"]);
+  const achievements = extractResumeSection(text, ["certifications","achievements","awards"]);
+  const values = {
+    "input-fullname": firstLine, "input-email": email, "input-phone": phone,
+    "input-summary": summary, "input-exp-desc": experience, "input-school": education,
+    "input-skills": skills ? skills.split(/[\n,;•|]+/).map(x => x.trim()).filter(Boolean).join(", ") : "",
+    "input-projects": projects, "input-achievements": achievements
+  };
+  let imported = 0;
+  Object.entries(values).forEach(([id,value]) => {
+    const field = document.getElementById(id);
+    if (field && value) { field.value = value; imported++; }
+  });
+  updateResumeState();
+  const status = document.getElementById("builderUploadStatus");
+  if (status) status.textContent = imported
+    ? "Resume imported. Please review and complete any empty fields, then choose one of the 15 templates."
+    : "The file was read, but details could not be confidently mapped. Please enter them manually.";
+  return true;
+}
+
+
 document.addEventListener("DOMContentLoaded", () => {
   if (window.lucide) window.lucide.createIcons();
   updateResumeState();
@@ -151,7 +204,7 @@ async function handleResumeFile(file) {
   const status = document.getElementById("uploadStatus");
   const fileName = document.getElementById("reviewFileName");
   const button = document.getElementById("runReviewButton");
-  const setStatus = message => { if (status) status.textContent = message; };
+  const setStatus = message => { if (status) status.textContent = message; const builderStatus = document.getElementById("builderUploadStatus"); if (builderStatus && builderUploadMode) builderStatus.textContent = message; };
   if (file.size > 8 * 1024 * 1024) { setStatus("File is larger than 8 MB. Please choose a smaller file."); return; }
   const ext = file.name.split(".").pop().toLowerCase();
   if (!["pdf", "docx", "txt"].includes(ext)) { setStatus("Unsupported format. Please upload a PDF, DOCX or TXT file."); return; }
@@ -177,13 +230,19 @@ async function handleResumeFile(file) {
       const result = await window.mammoth.extractRawText({ arrayBuffer: await file.arrayBuffer() });
       text = result.value || "";
     }
-    text = text.replace(/\s+/g, " ").trim();
+    text = text.replace(/\r\n?/g, "\n").replace(/[ \t]+/g, " ").replace(/\n{3,}/g, "\n\n").trim();
     if (text.length < 80) throw new Error("We could not read enough text. This may be a scanned image PDF. Please upload a text-based PDF or DOCX.");
     uploadedResumeText = text;
     uploadedResumeName = file.name;
     if (fileName) fileName.textContent = file.name;
     setStatus(`Ready: ${file.name}. Your resume text was extracted in your browser.`);
     if (button) button.disabled = false;
+    if (builderUploadMode) {
+      const imported = importResumeIntoBuilder(text);
+      builderUploadMode = false;
+      if (imported) { switchPage("builder"); setBuilderStep(1); document.getElementById("resume-paper")?.scrollIntoView({ behavior: "smooth", block: "start" }); }
+      return;
+    }
     renderResumeReview();
     switchPage("ats-checker");
   } catch (error) {
@@ -502,6 +561,8 @@ function exportPDF() {
 }
 
 window.switchPage = switchPage;
+window.startNewResume = startNewResume;
+window.startBuilderUpload = startBuilderUpload;
 window.setBuilderStep = setBuilderStep;
 window.addCustomResumeSection = addCustomResumeSection;
 window.focusResumePreview = focusResumePreview;
