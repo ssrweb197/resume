@@ -128,10 +128,13 @@ el("logout")?.addEventListener("click", async () => {
 
 onAuthStateChanged(auth, user => {
   const login = el("openLogin"), signup = el("openSignup"), logout = el("logout"), name = el("userName");
+  const mobileLogout = el("mobileLogout");
   if (user) {
     if (login) login.style.display = "none";
     if (signup) signup.style.display = "none";
     if (logout) logout.style.display = "inline-block";
+    if (mobileLogout) mobileLogout.style.display = "block";
+    document.querySelectorAll(".mobile-auth-link").forEach(link => { if (link.id !== "mobileLogout") link.style.display = "none"; });
     if (name) {
       name.textContent = user.displayName || user.email || "Account";
       name.style.display = "inline";
@@ -140,6 +143,8 @@ onAuthStateChanged(auth, user => {
     if (login) login.style.display = "inline-block";
     if (signup) signup.style.display = "inline-block";
     if (logout) logout.style.display = "none";
+    if (mobileLogout) mobileLogout.style.display = "none";
+    document.querySelectorAll(".mobile-auth-link").forEach(link => { if (link.id !== "mobileLogout") link.style.display = ""; });
     if (name) name.textContent = "";
   }
 });
