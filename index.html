@@ -239,6 +239,12 @@
 
         <!-- Live Resume Preview -->
         <div class="builder-preview-wrapper">
+          <div class="template-picker card" aria-label="Choose a free resume template"><div class="template-picker-heading"><div><strong>Choose your free template</strong><p>Switch layouts instantly. Your resume details stay the same.</p></div><span class="free-template-tag">5 FREE</span></div><div class="template-picker-options">
+<button type="button" class="template-choice active" data-template="modern" onclick="selectResumeTemplate('modern')"><span class="template-swatch swatch-modern">Aa</span><span><strong>Modern</strong><small>Clean professional</small></span></button>
+<button type="button" class="template-choice" data-template="classic" onclick="selectResumeTemplate('classic')"><span class="template-swatch swatch-classic">Aa</span><span><strong>Classic</strong><small>Traditional format</small></span></button>
+<button type="button" class="template-choice" data-template="minimal" onclick="selectResumeTemplate('minimal')"><span class="template-swatch swatch-minimal">Aa</span><span><strong>Minimal</strong><small>Simple and neat</small></span></button>
+<button type="button" class="template-choice" data-template="executive" onclick="selectResumeTemplate('executive')"><span class="template-swatch swatch-executive">Aa</span><span><strong>Executive</strong><small>Bold section titles</small></span></button>
+<button type="button" class="template-choice" data-template="fresher" onclick="selectResumeTemplate('fresher')"><span class="template-swatch swatch-fresher">Aa</span><span><strong>Fresher</strong><small>Skills and projects first</small></span></button></div></div>
           <div class="preview-toolbar">
             <span class="preview-status"><i data-lucide="eye"></i> Live Preview</span>
             <div class="toolbar-actions">
@@ -309,33 +315,12 @@
         </div>
 
         <div class="grid grid-3">
-          <div class="card template-card">
-            <div class="tpl-preview tpl-modern">Modern Tech</div>
-            <div class="tpl-info">
-              <h3>Modern Professional</h3>
-              <p>Clean double-line hierarchy suited for Software, Product, and Tech roles.</p>
-              <button class="btn btn-outline full-width" onclick="switchPage('builder')">Use Resume Builder</button>
-            </div>
-          </div>
-
-          <div class="card template-card">
-            <div class="tpl-preview tpl-minimal">Minimal Mono</div>
-            <div class="tpl-info">
-              <h3>Minimal Executive — Coming Soon</h3>
-              <p>This layout is not available yet.</p>
-              <button class="btn btn-outline full-width" disabled>Coming Soon</button>
-            </div>
-          </div>
-
-          <div class="card template-card">
-            <div class="tpl-preview tpl-creative">Creative Flow</div>
-            <div class="tpl-info">
-              <h3>Creative Studio — Coming Soon</h3>
-              <p>This layout is not available yet.</p>
-              <button class="btn btn-outline full-width" disabled>Coming Soon</button>
-            </div>
-          </div>
-        </div>
+<div class="card template-card"><div class="tpl-preview tpl-modern">Modern</div><div class="tpl-info"><h3>Modern Professional</h3><p>Balanced blue accents and clean hierarchy for most job applications.</p><button class="btn btn-outline full-width" onclick="selectResumeTemplate('modern');switchPage('builder')">Use This Template</button></div></div>
+<div class="card template-card"><div class="tpl-preview tpl-classic">Classic</div><div class="tpl-info"><h3>Classic Professional</h3><p>Traditional black-and-white layout with clear, familiar sections.</p><button class="btn btn-outline full-width" onclick="selectResumeTemplate('classic');switchPage('builder')">Use This Template</button></div></div>
+<div class="card template-card"><div class="tpl-preview tpl-minimal">Minimal</div><div class="tpl-info"><h3>Minimal Clean</h3><p>Simple typography, generous spacing and a distraction-free design.</p><button class="btn btn-outline full-width" onclick="selectResumeTemplate('minimal');switchPage('builder')">Use This Template</button></div></div>
+<div class="card template-card"><div class="tpl-preview tpl-executive">Executive</div><div class="tpl-info"><h3>Executive Profile</h3><p>Strong section headings for experienced professionals and team leads.</p><button class="btn btn-outline full-width" onclick="selectResumeTemplate('executive');switchPage('builder')">Use This Template</button></div></div>
+<div class="card template-card"><div class="tpl-preview tpl-fresher">Fresher</div><div class="tpl-info"><h3>Fresher / Graduate</h3><p>Highlights education, skills and academic projects for early careers.</p><button class="btn btn-outline full-width" onclick="selectResumeTemplate('fresher');switchPage('builder')">Use This Template</button></div></div>
+</div>
       </div>
     </section>
 
