@@ -53,10 +53,12 @@ function switchPage(pageId) {
 }
 
 let selectedResumeTemplate = "modern";
+window.selectedResumeTemplate = selectedResumeTemplate;
 function selectResumeTemplate(template) {
   const allowed = ["modern", "classic", "minimal", "executive", "fresher"];
   if (!allowed.includes(template)) return;
   selectedResumeTemplate = template;
+  window.selectedResumeTemplate = template;
   const paper = document.getElementById("resume-paper");
   if (paper) {
     allowed.forEach(name => paper.classList.remove("resume-template-" + name));
