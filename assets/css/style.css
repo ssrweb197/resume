@@ -859,3 +859,47 @@ button:disabled{opacity:.55;cursor:not-allowed}
 /* Signed-in mobile header sign-out action beside the menu */
 .mobile-header-logout{display:none;align-items:center;justify-content:center;min-height:42px;padding:0 .8rem;border:1px solid #dbe5f5;border-radius:12px;background:#f8faff;color:#315bd6;font-size:.82rem;font-weight:700;white-space:nowrap;cursor:pointer}
 @media(max-width:900px){.mobile-header-logout{display:none;min-height:42px}.nav-actions{gap:.55rem!important}}
+
+
+/* Reference-inspired two-column resume layouts */
+#resume-paper.resume-template-classic-gold,#resume-paper.resume-template-professional-navy,#resume-paper.resume-template-minimal-split{display:grid!important;grid-template-columns:minmax(0,1.65fr) minmax(170px,.85fr);gap:0 1.1rem;align-content:start;position:relative;overflow:hidden;padding:1.15rem!important}
+#resume-paper.resume-template-classic-gold{background:#f4f5f7!important;color:#27364b;border-left:7px solid #c6a15e}
+#resume-paper.resume-template-professional-navy{grid-template-columns:minmax(170px,.78fr) minmax(0,1.65fr);background:#fff!important}
+#resume-paper.resume-template-minimal-split{background:#fff!important}
+#resume-paper.resume-template-classic-gold:after,#resume-paper.resume-template-professional-navy:after,#resume-paper.resume-template-minimal-split:after{content:"";position:absolute;z-index:0;top:0;bottom:0;right:0;width:34%;background:linear-gradient(160deg,#26364d,#5e7186)}
+#resume-paper.resume-template-professional-navy:after{right:auto;left:0;width:31%;background:#173b55}
+#resume-paper.resume-template-minimal-split:after{width:31%;background:#eceff2}
+#resume-paper.resume-template-classic-gold>* ,#resume-paper.resume-template-professional-navy>* ,#resume-paper.resume-template-minimal-split>*{position:relative;z-index:1;min-width:0}
+#resume-paper.resume-template-classic-gold .resume-header{grid-column:1;grid-row:1;text-align:left;border:0;padding:0 0 1rem}
+#resume-paper.resume-template-classic-gold .pv-section:nth-of-type(1){grid-column:1;grid-row:2}
+#resume-paper.resume-template-classic-gold .pv-section:nth-of-type(2){grid-column:1;grid-row:3}
+#resume-paper.resume-template-classic-gold .pv-section:nth-of-type(3){grid-column:1;grid-row:4}
+#resume-paper.resume-template-classic-gold .pv-section:nth-of-type(4),#resume-paper.resume-template-classic-gold .pv-section:nth-of-type(5){grid-column:1}
+#resume-paper.resume-template-classic-gold .pv-section:nth-of-type(6){grid-column:2;grid-row:2/7;color:#fff;padding:.5rem}
+#resume-paper.resume-template-classic-gold .pv-section:nth-of-type(6) .pv-sec-title{color:#fff;border-color:#d0ad6b}
+#resume-paper.resume-template-classic-gold .pv-section:nth-of-type(6) .pv-tag{background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.25)}
+#resume-paper.resume-template-classic-gold .pv-sec-title{color:#26364b;border-color:#c6a15e}
+#resume-paper.resume-template-professional-navy .resume-header{grid-column:2;grid-row:1;text-align:left;border:0;padding:1rem 0}
+#resume-paper.resume-template-professional-navy .pv-section:nth-of-type(1){grid-column:2;grid-row:2}
+#resume-paper.resume-template-professional-navy .pv-section:nth-of-type(2){grid-column:2;grid-row:3}
+#resume-paper.resume-template-professional-navy .pv-section:nth-of-type(3){grid-column:1;grid-row:2}
+#resume-paper.resume-template-professional-navy .pv-section:nth-of-type(4),#resume-paper.resume-template-professional-navy .pv-section:nth-of-type(5){grid-column:2}
+#resume-paper.resume-template-professional-navy .pv-section:nth-of-type(6){grid-column:1;grid-row:3/7;color:#fff;padding:.5rem}
+#resume-paper.resume-template-professional-navy .pv-section:nth-of-type(3) .pv-sec-title,#resume-paper.resume-template-professional-navy .pv-section:nth-of-type(6) .pv-sec-title{color:#fff;border-color:#a8bfce}
+#resume-paper.resume-template-professional-navy .pv-section:nth-of-type(6) .pv-tag{background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.25)}
+#resume-paper.resume-template-professional-navy .pv-contact{color:#35475c}
+#resume-paper.resume-template-minimal-split .resume-header{grid-column:1;grid-row:1;text-align:left;border:0}
+#resume-paper.resume-template-minimal-split .pv-section:nth-of-type(1){grid-column:1;grid-row:2}
+#resume-paper.resume-template-minimal-split .pv-section:nth-of-type(2){grid-column:1;grid-row:3}
+#resume-paper.resume-template-minimal-split .pv-section:nth-of-type(3){grid-column:2;grid-row:2}
+#resume-paper.resume-template-minimal-split .pv-section:nth-of-type(4),#resume-paper.resume-template-minimal-split .pv-section:nth-of-type(5){grid-column:1}
+#resume-paper.resume-template-minimal-split .pv-section:nth-of-type(6){grid-column:2;grid-row:3/7;padding:.5rem}
+#resume-paper.resume-template-minimal-split .pv-sec-title{color:#354253}
+#resume-paper.resume-template-classic-gold .pv-section,#resume-paper.resume-template-professional-navy .pv-section,#resume-paper.resume-template-minimal-split .pv-section{margin:.65rem 0;break-inside:avoid;page-break-inside:avoid}
+.swatch-gold{color:#9b783c;border-top:4px solid #c6a15e}.swatch-navy{color:#fff;background:#173b55;border-color:#173b55}.swatch-split{color:#52657b;background:#eceff2}
+.tpl-classic-gold,.tpl-professional-navy,.tpl-minimal-split{min-height:145px;padding:1rem;display:grid;place-items:center;font-weight:800}
+.tpl-classic-gold{background:linear-gradient(90deg,#f4f5f7 68%,#26364d 68%);border-left:5px solid #c6a15e;color:#26364b}
+.tpl-professional-navy{background:linear-gradient(90deg,#173b55 32%,#fff 32%);color:#26364b}
+.tpl-minimal-split{background:linear-gradient(90deg,#fff 69%,#eceff2 69%);color:#52657b}
+@media(max-width:600px){#resume-paper.resume-template-classic-gold,#resume-paper.resume-template-professional-navy,#resume-paper.resume-template-minimal-split{grid-template-columns:minmax(0,1fr) minmax(105px,.72fr);gap:0 .55rem;padding:.7rem!important;font-size:.76rem}#resume-paper.resume-template-professional-navy{grid-template-columns:minmax(105px,.72fr) minmax(0,1fr)}}
+@media print{#resume-paper.resume-template-classic-gold,#resume-paper.resume-template-professional-navy,#resume-paper.resume-template-minimal-split{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
