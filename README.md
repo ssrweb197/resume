@@ -20,7 +20,7 @@ Add `OPENAI_API_KEY` as an encrypted Secret. Never add it to frontend JavaScript
 
 ### Important Firebase project check
 
-The current `firebase-config.js` points to project ID `billvault-d7976`. Before setting `FIREBASE_PROJECT_ID`, confirm in Firebase Console that this is the intended Firebase project for ResumeBuild and that its Authentication providers are configured for this website. If it is a different product's project, create a dedicated Firebase project and update the web configuration and Cloudflare variable together. Do not guess or reuse another product's user database.
+The current `firebase-config.js` points to the dedicated ResumeBuild project ID `brandblitz-resume-ai-92b9e`. Set the Cloudflare `FIREBASE_PROJECT_ID` variable to this exact value and confirm Firebase Authentication providers are enabled for the deployed domain.
 
 ### User flow and privacy
 
@@ -36,11 +36,15 @@ The function does not intentionally persist or log resume text. The AI provider 
 
 OpenAI API usage is billed separately from ChatGPT subscriptions. The AI rewrite feature will return a configuration message until the Cloudflare secret and matching Firebase project variable are set. Static GitHub Pages does not execute Cloudflare Pages Functions; use the Cloudflare Pages deployment for AI rewrite.
 
+## Free resume builder features
+
+The builder includes five selectable layouts (Modern, Classic, Minimal, Executive and Fresher), live preview, project details, certifications/achievements, profile links, browser print-to-PDF, and a Word-compatible `.doc` export. The Word export is HTML-based for Microsoft Word compatibility; it is not a native `.docx` file.
+
 ## Existing application files
 
 - `index.html` — website interface
 - `assets/css/style.css` — styling
-- `assets/js/app.js` — resume builder, local upload review and AI rewrite UI
+- `assets/js/app.js` — five free resume templates, resume builder, local upload review, AI rewrite UI, PDF print and Word-compatible export
 - `auth.js` / `firebase-config.js` — Firebase authentication setup
 - `functions/api/rewrite.js` — secure server-side AI rewrite endpoint
 - `privacy-policy.html` — privacy disclosures
