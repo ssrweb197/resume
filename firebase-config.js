@@ -5,7 +5,7 @@ import { getAuth, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/
 import { getFirestore } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBh5mur6QykN14lQgw5st63MiwlNY6FjSg",
+  apiKey: "AIzaSyBh5mur6QykNi41Qqw5st63MiwlNY6FjSg",
   authDomain: "brandblitz-resume-ai-92b9e.firebaseapp.com",
   projectId: "brandblitz-resume-ai-92b9e",
   storageBucket: "brandblitz-resume-ai-92b9e.firebasestorage.app",
