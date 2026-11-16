@@ -9,6 +9,7 @@ let uploadedResumeName = "";
 document.addEventListener("DOMContentLoaded", () => {
   if (window.lucide) window.lucide.createIcons();
   updateResumeState();
+  selectResumeTemplate("modern");
 
   const menuButton = document.getElementById("mobileMenuBtn");
   const navLinks = document.getElementById("navLinks");
@@ -49,6 +50,23 @@ function switchPage(pageId) {
   if (window.history?.replaceState) window.history.replaceState(null, "", `#${pageId}`);
   window.scrollTo({ top: 0, behavior: "smooth" });
   return false;
+}
+
+let selectedResumeTemplate = "modern";
+function selectResumeTemplate(template) {
+  const allowed = ["modern", "classic", "minimal", "executive", "fresher"];
+  if (!allowed.includes(template)) return;
+  selectedResumeTemplate = template;
+  const paper = document.getElementById("resume-paper");
+  if (paper) {
+    allowed.forEach(name => paper.classList.remove("resume-template-" + name));
+    paper.classList.add("resume-template-" + template);
+  }
+  document.querySelectorAll(".template-choice").forEach(button => {
+    const active = button.dataset.template === template;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", String(active));
+  });
 }
 
 function setBuilderStep(stepIndex) {
@@ -439,6 +457,7 @@ function exportPDF() {
 
 window.switchPage = switchPage;
 window.setBuilderStep = setBuilderStep;
+window.selectResumeTemplate = selectResumeTemplate;
 window.updateResumeState = updateResumeState;
 window.triggerAISummary = triggerAISummary;
 window.exportPDF = exportPDF;
