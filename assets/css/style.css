@@ -998,3 +998,21 @@ button:disabled{opacity:.55;cursor:not-allowed}
 #resume-paper.resume-template-pro .pv-section{min-width:0;padding:.65rem;background:#f6f8fb;border-radius:6px}
 #resume-paper.resume-template-pro .pv-section:nth-of-type(1),#resume-paper.resume-template-pro .pv-section:nth-of-type(2){background:#fff}
 @media(max-width:600px){#resume-paper.resume-template-pro{grid-template-columns:minmax(0,1fr);column-gap:0}#resume-paper.resume-template-pro .resume-header,#resume-paper.resume-template-pro .pv-section,#resume-paper.resume-template-pro .pv-section:nth-of-type(1),#resume-paper.resume-template-pro .pv-section:nth-of-type(2),#resume-paper.resume-template-pro .pv-section:nth-of-type(3),#resume-paper.resume-template-pro #pv-projects-section,#resume-paper.resume-template-pro #pv-achievements-section,#resume-paper.resume-template-pro .pv-section:last-of-type{grid-column:1;grid-row:auto}}
+
+
+/* Guided start screen */
+.builder-start-page{max-width:1050px}
+.builder-start-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem;max-width:900px;margin:0 auto}
+.builder-start-card{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:350px;padding:2.2rem 1.6rem;border:1px solid #dce5f1;border-radius:20px;background:#fff;color:#17233d;text-align:center;cursor:pointer;box-shadow:0 12px 34px rgba(31,59,110,.07);transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.builder-start-card:hover,.builder-start-card:focus-visible{transform:translateY(-3px);border-color:#8eaceb;box-shadow:0 18px 42px rgba(31,59,110,.13);outline:3px solid rgba(49,91,214,.12)}
+.builder-start-icon{display:grid;place-items:center;width:92px;height:92px;margin-bottom:1.25rem;border:2px solid #21b66e;border-radius:20px;color:#18a765;background:#f3fff8}
+.builder-start-icon svg{width:48px;height:48px;stroke-width:1.7}
+.builder-start-card strong{font-size:1.35rem;margin:.25rem 0 .65rem}
+.builder-start-card>span:not(.builder-start-icon):not(.builder-start-badge):not(.builder-start-action){max-width:330px;color:#718096;line-height:1.65}
+.builder-start-badge{position:absolute;top:14px;left:18px;padding:.35rem .75rem;border-radius:999px;background:#20b66d;color:#fff;font-size:.75rem;font-weight:800;letter-spacing:.04em}
+.builder-start-action{display:inline-flex;align-items:center;gap:.45rem;margin-top:1.45rem;padding:.7rem 1rem;border-radius:10px;background:#eff6ff;color:#2458c5;font-weight:750}
+.builder-start-upload .builder-start-action{background:#ecfdf5;color:#13834d}
+.builder-start-privacy{display:flex;justify-content:center;align-items:center;gap:.45rem;margin:1.6rem auto .5rem;color:#68778d;font-size:.83rem;text-align:center}
+.builder-start-privacy svg{width:17px;color:#15976c;flex-shrink:0}
+.builder-upload-status{text-align:center;color:#315bd6;font-size:.85rem;min-height:1.3rem}
+@media(max-width:700px){.builder-start-options{grid-template-columns:1fr;gap:1rem}.builder-start-card{min-height:275px;padding:1.6rem 1.2rem}.builder-start-icon{width:76px;height:76px}.builder-start-icon svg{width:40px;height:40px}.builder-start-card strong{font-size:1.18rem}.builder-start-privacy{align-items:flex-start;line-height:1.5;padding:0 .5rem}}
