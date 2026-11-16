@@ -227,31 +227,18 @@ function renderResumeReview() {
   reportButton.addEventListener("click", () => downloadResumeReviewReport(checks, suggestions, wordCount));
   results.appendChild(reportButton);
 
-  const aiConsent = document.createElement("label");
-  aiConsent.className = "ai-consent no-print";
-  const consentBox = document.createElement("input");
-  consentBox.type = "checkbox";
-  consentBox.id = "aiRewriteConsent";
-  const consentText = document.createElement("span");
-  consentText.textContent = "I agree to send the extracted resume text and optional job description to our AI provider for rewriting. I understand this uses a third-party AI service.";
-  aiConsent.append(consentBox, consentText);
-  results.appendChild(aiConsent);
-
-  const aiButton = document.createElement("button");
-  aiButton.type = "button";
-  aiButton.id = "aiRewriteButton";
-  aiButton.className = "btn btn-primary review-ai-button no-print";
-  aiButton.textContent = "Rewrite My Resume with AI";
-  aiButton.disabled = true;
-  consentBox.addEventListener("change", () => { aiButton.disabled = !consentBox.checked; });
-  aiButton.addEventListener("click", requestAIRewrite);
-  results.appendChild(aiButton);
+  const aiNotice = document.createElement("div");
+  aiNotice.className = "ai-consent no-print";
+  aiNotice.setAttribute("role", "status");
+  aiNotice.textContent = "AI rewriting is temporarily paused to keep ResumeBuild free while API billing is not configured. You can still use the resume review checklist, job-description keyword comparison and download your review report.";
+  results.appendChild(aiNotice);
 
   const aiStatus = document.createElement("p");
   aiStatus.id = "aiRewriteStatus";
   aiStatus.className = "review-disclaimer no-print";
   aiStatus.setAttribute("role", "status");
   aiStatus.setAttribute("aria-live", "polite");
+  aiStatus.textContent = "AI Rewrite is temporarily unavailable. Your uploaded resume is still reviewed in this browser.";
   results.appendChild(aiStatus);
 
   const disclaimer = document.createElement("p"); disclaimer.className = "review-disclaimer";
