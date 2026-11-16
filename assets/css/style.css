@@ -633,6 +633,8 @@ button:disabled{opacity:.55;cursor:not-allowed}
 /* Brand name and compact mobile header */
 .brand-logo { min-width: 0; flex-shrink: 1; font-size: clamp(1rem, 2vw, 1.25rem); white-space: nowrap; }
 .brand-logo .logo-text { letter-spacing: -0.03em; }
+.brand-logo { gap: 1rem; }
+.brand-logo .logo-icon img { display: block; width: 48px; height: 48px; object-fit: contain; }
 .nav-actions { flex-shrink: 0; }
 .nav-actions > .nav-actions { display: flex; align-items: center; gap: 0.5rem; }
 @media (max-width: 900px) {
@@ -675,7 +677,7 @@ button:disabled{opacity:.55;cursor:not-allowed}
 @media (max-width: 900px) {
   .nav-container{display:flex!important;flex-wrap:nowrap!important;align-items:center!important;justify-content:space-between!important;min-height:72px;padding:.75rem 1rem!important;gap:.75rem!important}
   .brand-logo{flex:0 1 auto!important;width:auto!important;justify-content:flex-start!important;white-space:nowrap;font-size:clamp(.95rem,4.3vw,1.2rem)!important}
-  .brand-logo .logo-icon{width:42px;height:42px;flex:0 0 42px}
+  .brand-logo{gap:14px!important}.brand-logo .logo-icon{width:48px;height:48px;flex:0 0 48px;padding:0!important;overflow:hidden;border-radius:12px}.brand-logo .logo-icon img{width:48px;height:48px;display:block;object-fit:contain}
   .nav-actions{width:auto!important;margin-left:auto;display:flex!important;flex:0 0 auto;align-items:center;justify-content:flex-end!important}
   .nav-actions #openLogin,.nav-actions #openSignup,.nav-actions #logout,.nav-actions #userName,.nav-actions .user-name,.nav-actions .nav-create-btn{display:none!important}
   .mobile-toggle{display:flex!important;align-items:center;justify-content:center;width:44px;height:44px;padding:0;border:1px solid #e4eaf4;border-radius:12px;background:#fff;color:#17233d;font-size:1.4rem}
