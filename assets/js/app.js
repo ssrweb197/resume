@@ -84,6 +84,15 @@ function updateResumeState() {
   setText("pv-email", fieldValue("input-email"), "");
   setText("pv-phone", fieldValue("input-phone"), "");
   setText("pv-location", fieldValue("input-location"), "");
+  setText("pv-links", fieldValue("input-links"), "");
+  const projects = document.getElementById("pv-projects");
+  const projectSection = document.getElementById("pv-projects-section");
+  if (projects) projects.textContent = fieldValue("input-projects");
+  if (projectSection) projectSection.hidden = !fieldValue("input-projects");
+  const achievements = document.getElementById("pv-achievements");
+  const achievementSection = document.getElementById("pv-achievements-section");
+  if (achievements) achievements.textContent = fieldValue("input-achievements");
+  if (achievementSection) achievementSection.hidden = !fieldValue("input-achievements");
   setText("pv-summary", fieldValue("input-summary"), "");
   setText("pv-company", fieldValue("input-company"), "");
   setText("pv-role", fieldValue("input-role"), "");
@@ -369,7 +378,10 @@ function renderAIResume(data) {
       "input-phone": data.phone,
       "input-location": data.location,
       "input-summary": data.professionalSummary,
-      "input-skills": Array.isArray(data.skills) ? data.skills.join(", ") : ""
+      "input-skills": Array.isArray(data.skills) ? data.skills.join(", ") : "",
+      "input-exp-desc": data.experience || "",
+      "input-degree": data.education || "",
+      "input-projects": data.projects || ""
     };
     Object.entries(values).forEach(([id, value]) => {
       const field = document.getElementById(id);
@@ -450,6 +462,17 @@ function runATSCheck() {
 function triggerAISummary() {
   window.alert("AI writing assistance is not connected yet. The resume review currently provides checklist and keyword suggestions only.");
 }
+function exportWord() {
+  if (!fieldValue("input-fullname")) { window.alert("Please enter your name before exporting your resume."); document.getElementById("input-fullname")?.focus(); return; }
+  const paper = document.getElementById("resume-paper"); if (!paper) return;
+  const clone = paper.cloneNode(true); clone.querySelectorAll("[hidden]").forEach(node => node.remove());
+  const styles = "<style>body{font-family:Arial,sans-serif;color:#202b3c;line-height:1.45}h1{font-size:24pt;margin:0 0 5pt}h2{font-size:12pt;border-bottom:1px solid #bbb;margin:16pt 0 6pt}p{white-space:pre-wrap}.pv-tag{display:inline-block;margin:2pt 5pt 2pt 0;padding:2pt 5pt;border:1px solid #ddd}</style>";
+  const html = "<!doctype html><html><head><meta charset=\"utf-8\">" + styles + "</head><body>" + clone.outerHTML + "</body></html>";
+  const blob = new Blob(["\ufeff", html], { type: "application/msword" });
+  const url = URL.createObjectURL(blob); const link = document.createElement("a"); link.href = url;
+  link.download = (fieldValue("input-fullname").replace(/[^a-z0-9-_]+/gi, "-") || "resume") + ".doc";
+  document.body.appendChild(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
 function exportPDF() {
   if (!fieldValue("input-fullname")) { window.alert("Please enter your name before exporting your resume."); document.getElementById("input-fullname")?.focus(); return; }
   window.print();
@@ -461,4 +484,5 @@ window.selectResumeTemplate = selectResumeTemplate;
 window.updateResumeState = updateResumeState;
 window.triggerAISummary = triggerAISummary;
 window.exportPDF = exportPDF;
+window.exportWord = exportWord;
 window.runATSCheck = runATSCheck;
