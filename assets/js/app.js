@@ -9,7 +9,9 @@ let uploadedResumeName = "";
 document.addEventListener("DOMContentLoaded", () => {
   if (window.lucide) window.lucide.createIcons();
   updateResumeState();
-  selectResumeTemplate("modern");
+  restoreResumeDraft();
+  updateResumeState();
+  selectResumeTemplate(localStorage.getItem("resumebuild-template") || "modern");
 
   const menuButton = document.getElementById("mobileMenuBtn");
   const navLinks = document.getElementById("navLinks");
@@ -55,10 +57,11 @@ function switchPage(pageId) {
 let selectedResumeTemplate = "modern";
 window.selectedResumeTemplate = selectedResumeTemplate;
 function selectResumeTemplate(template) {
-  const allowed = ["modern", "classic", "minimal", "executive", "fresher"];
+  const allowed = ["modern", "classic", "minimal", "executive", "fresher", "classic-gold", "professional-navy", "minimal-split"];
   if (!allowed.includes(template)) return;
   selectedResumeTemplate = template;
   window.selectedResumeTemplate = template;
+  try { localStorage.setItem("resumebuild-template", template); } catch (error) {}
   const paper = document.getElementById("resume-paper");
   if (paper) {
     allowed.forEach(name => paper.classList.remove("resume-template-" + name));
@@ -80,7 +83,17 @@ function setText(id, value, placeholder) {
   const node = document.getElementById(id);
   if (node) node.textContent = value || placeholder;
 }
+const RESUME_DRAFT_KEY = "resumebuild-draft-v1";
+const RESUME_FIELD_IDS = ["input-fullname","input-title","input-email","input-phone","input-location","input-summary","input-company","input-role","input-duration","input-exp-desc","input-degree","input-school","input-edu-year","input-skills","input-projects","input-achievements","input-links"];
+function restoreResumeDraft() {
+  try { const saved = JSON.parse(localStorage.getItem(RESUME_DRAFT_KEY) || "{}"); RESUME_FIELD_IDS.forEach(id => { const field=document.getElementById(id); if(field && typeof saved[id] === "string") field.value=saved[id]; }); } catch (error) { console.warn("Resume draft restore failed", error); }
+}
+function saveResumeDraft() {
+  try { const data={}; RESUME_FIELD_IDS.forEach(id => { const field=document.getElementById(id); if(field) data[id]=field.value; }); localStorage.setItem(RESUME_DRAFT_KEY, JSON.stringify(data)); } catch (error) { console.warn("Resume draft save failed", error); }
+}
+
 function updateResumeState() {
+  saveResumeDraft();
   setText("pv-name", fieldValue("input-fullname"), "Your Name");
   setText("pv-title", fieldValue("input-title"), "Your Professional Title");
   setText("pv-email", fieldValue("input-email"), "");
