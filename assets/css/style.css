@@ -903,3 +903,38 @@ button:disabled{opacity:.55;cursor:not-allowed}
 .tpl-minimal-split{background:linear-gradient(90deg,#fff 69%,#eceff2 69%);color:#52657b}
 @media(max-width:600px){#resume-paper.resume-template-classic-gold,#resume-paper.resume-template-professional-navy,#resume-paper.resume-template-minimal-split{grid-template-columns:minmax(0,1fr) minmax(105px,.72fr);gap:0 .55rem;padding:.7rem!important;font-size:.76rem}#resume-paper.resume-template-professional-navy{grid-template-columns:minmax(105px,.72fr) minmax(0,1fr)}}
 @media print{#resume-paper.resume-template-classic-gold,#resume-paper.resume-template-professional-navy,#resume-paper.resume-template-minimal-split{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+
+
+/* ResumeBuild mobile-first workflow and quick navigation */
+.builder-workflow{display:flex;align-items:center;justify-content:center;gap:.65rem;padding:.85rem 1rem;background:#fff;border-bottom:1px solid #e5eaf3}
+.workflow-step{display:flex;align-items:center;gap:.45rem;border:1px solid #dbe4f2;border-radius:999px;padding:.55rem .9rem;background:#f8faff;color:#52617a;font-size:.82rem;font-weight:700;cursor:pointer}
+.workflow-step span{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#e4ebf8;color:#315bd6}
+.workflow-step.active{background:#eaf0ff;border-color:#9bb5f3;color:#2453c5}
+.workflow-step.active span{background:#315bd6;color:#fff}
+.custom-section-builder{margin-top:1.4rem;padding:1rem;border:1px solid #dfe7f3;border-radius:14px;background:#f8faff}
+.custom-section-builder h4{margin:0 0 .3rem;color:#24334f}.custom-section-builder>p{font-size:.8rem;color:#71809a;line-height:1.5;margin:0 0 .9rem}
+.custom-section-builder .form-group{margin:.7rem 0}.custom-section-list{display:grid;gap:.45rem;margin-top:.8rem}
+.custom-section-row{display:flex;align-items:center;justify-content:space-between;gap:.7rem;padding:.55rem .65rem;background:#fff;border:1px solid #e5eaf3;border-radius:9px;font-size:.82rem}
+.mobile-app-nav{display:none}
+@media(max-width:700px){
+ body{padding-bottom:68px}
+ .mobile-app-nav{position:fixed;z-index:9990;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(4,1fr);min-height:64px;padding:6px 5px calc(6px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e4eaf3;box-shadow:0 -5px 22px rgba(20,35,65,.08);backdrop-filter:blur(12px)}
+ .mobile-app-nav button{border:0;background:transparent;color:#52617a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:.68rem;font-weight:700;cursor:pointer}
+ .mobile-app-nav button span{font-size:1.25rem;line-height:1.25;color:#315bd6}
+ .builder-workflow{position:sticky;top:0;z-index:20;justify-content:space-between;gap:.3rem;padding:.65rem .5rem}
+ .workflow-step{padding:.48rem .55rem;font-size:.72rem;gap:.3rem}
+ .workflow-step span{width:19px;height:19px;font-size:.7rem}
+ .builder-layout{display:flex;flex-direction:column;height:auto;overflow:visible}
+ .builder-sidebar{order:1;border-right:0;min-height:0}
+ .builder-preview-wrapper{order:2;min-height:0;padding:1rem .65rem 1.5rem}
+ .builder-tabs{position:sticky;top:49px;z-index:10;overflow-x:auto}
+ .b-tab{min-width:max-content;padding:.85rem .7rem}
+ .form-scroll-container{padding:1rem}
+ .paper-canvas{width:100%;max-width:100%;min-height:0;padding:1rem!important}
+ .template-picker{width:100%;overflow:hidden}
+ .template-picker-options{display:flex;overflow-x:auto;gap:.5rem;padding-bottom:.5rem}
+ .template-choice{min-width:145px}
+ .preview-toolbar{position:static}
+ .custom-section-builder{margin-bottom:1rem}
+}
+@media(min-width:701px){.mobile-app-nav{display:none!important}}
