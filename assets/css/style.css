@@ -969,3 +969,7 @@ button:disabled{opacity:.55;cursor:not-allowed}
  .hero-proof span{justify-content:center;white-space:normal;text-align:center}
  .hero-proof span:last-child{grid-column:1/-1;justify-self:center;min-width:52%}
 }
+
+
+/* Homepage: remove the feature-highlight pills for a cleaner hero layout */
+.hero-proof{display:none!important}
