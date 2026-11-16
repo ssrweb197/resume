@@ -146,7 +146,7 @@
             <button class="b-tab active" onclick="setBuilderStep(1)">Personal</button>
             <button class="b-tab" onclick="setBuilderStep(2)">Experience</button>
             <button class="b-tab" onclick="setBuilderStep(3)">Education</button>
-            <button class="b-tab" onclick="setBuilderStep(4)">Skills</button>
+            <button class="b-tab" onclick="setBuilderStep(4)">Skills & Projects</button>
           </div>
 
           <div class="form-scroll-container">
@@ -231,7 +231,13 @@
               <h3>Skills & Competencies</h3>
               <div class="form-group full">
                 <label>Comma-Separated Skills</label>
-                <input type="text" id="input-skills" value="" oninput="updateResumeState()">
+                <input type="text" id="input-skills" value="" placeholder="e.g. JavaScript, React, Communication" oninput="updateResumeState()">
+              </div>
+              <div class="form-group full"><label>Projects (one project per line)</label><textarea id="input-projects" rows="5" placeholder="Project name — tools used — what you built or achieved" oninput="updateResumeState()"></textarea>
+              </div>
+              <div class="form-group full"><label>Certifications & Achievements (optional)</label><textarea id="input-achievements" rows="3" placeholder="Add relevant certifications, awards or achievements" oninput="updateResumeState()"></textarea>
+              </div>
+              <div class="form-group full"><label>LinkedIn / Portfolio / GitHub (optional)</label><input type="text" id="input-links" placeholder="linkedin.com/in/yourname | github.com/yourname" oninput="updateResumeState()">
               </div>
             </div>
           </div>
@@ -249,7 +255,7 @@
             <span class="preview-status"><i data-lucide="eye"></i> Live Preview</span>
             <div class="toolbar-actions">
               <button class="btn btn-outline btn-sm" onclick="window.print()"><i data-lucide="printer"></i> Print</button>
-              <button class="btn btn-primary btn-sm" onclick="exportPDF()"><i data-lucide="download"></i> Download PDF</button>
+              <button class="btn btn-primary btn-sm" onclick="exportPDF()"><i data-lucide="download"></i> Download PDF</button><button class="btn btn-outline btn-sm" onclick="exportWord()"><i data-lucide="file-text"></i> Download Word</button>
              
     
               <button class="btn btn-secondary" onclick="saveResume()">
@@ -265,7 +271,7 @@
               <div class="pv-contact">
                 <span id="pv-email"></span> | 
                 <span id="pv-phone"></span> | 
-                <span id="pv-location"></span>
+                <span id="pv-location"></span><span id="pv-links"></span>
               </div>
             </header>
 
@@ -295,6 +301,8 @@
               <div id="pv-degree"></div>
             </section>
 
+            <section class="pv-section" id="pv-projects-section" hidden><h2 class="pv-sec-title">Projects</h2><div id="pv-projects" class="pv-desc"></div></section>
+            <section class="pv-section" id="pv-achievements-section" hidden><h2 class="pv-sec-title">Certifications & Achievements</h2><div id="pv-achievements" class="pv-desc"></div></section>
             <section class="pv-section">
               <h2 class="pv-sec-title">Skills</h2>
               <div id="pv-skills" class="pv-skills-tags">
