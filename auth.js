@@ -125,15 +125,19 @@ el("googleLogin")?.addEventListener("click", async () => {
 el("logout")?.addEventListener("click", async () => {
   try { await signOut(auth); } catch (error) { alert(error.message); }
 });
+el("mobileHeaderLogout")?.addEventListener("click", async () => {
+  try { await signOut(auth); } catch (error) { alert(error.message); }
+});
 
 onAuthStateChanged(auth, user => {
   const login = el("openLogin"), signup = el("openSignup"), logout = el("logout"), name = el("userName");
-  const mobileLogout = el("mobileLogout");
+  const mobileLogout = el("mobileLogout"), mobileHeaderLogout = el("mobileHeaderLogout");
   if (user) {
     if (login) login.style.display = "none";
     if (signup) signup.style.display = "none";
     if (logout) logout.style.display = "inline-block";
     if (mobileLogout) mobileLogout.style.display = "block";
+    if (mobileHeaderLogout) mobileHeaderLogout.style.display = "inline-flex";
     document.querySelectorAll(".mobile-auth-link").forEach(link => { if (link.id !== "mobileLogout") link.style.display = "none"; });
     if (name) {
       name.textContent = user.displayName || user.email || "Account";
@@ -144,6 +148,7 @@ onAuthStateChanged(auth, user => {
     if (signup) signup.style.display = "inline-block";
     if (logout) logout.style.display = "none";
     if (mobileLogout) mobileLogout.style.display = "none";
+    if (mobileHeaderLogout) mobileHeaderLogout.style.display = "none";
     document.querySelectorAll(".mobile-auth-link").forEach(link => { if (link.id !== "mobileLogout") link.style.display = ""; });
     if (name) name.textContent = "";
   }
