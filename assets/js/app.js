@@ -58,7 +58,7 @@ function switchPage(pageId) {
 let selectedResumeTemplate = "modern";
 window.selectedResumeTemplate = selectedResumeTemplate;
 function selectResumeTemplate(template) {
-  const allowed = ["modern", "classic", "minimal", "executive", "fresher", "classic-gold", "professional-navy", "minimal-split"];
+  const allowed = ["modern", "classic", "minimal", "executive", "fresher", "classic-gold", "professional-navy", "minimal-split", "corporate", "elegant", "pro", "gravity", "timeline", "creative", "compact"];
   if (!allowed.includes(template)) return;
   selectedResumeTemplate = template;
   window.selectedResumeTemplate = template;
