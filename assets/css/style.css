@@ -938,3 +938,34 @@ button:disabled{opacity:.55;cursor:not-allowed}
  .custom-section-builder{margin-bottom:1rem}
 }
 @media(min-width:701px){.mobile-app-nav{display:none!important}}
+
+
+/* Refined homepage action area: clear hierarchy, calmer spacing */
+.hero-primary-actions{gap:.75rem}
+.hero-primary-actions .btn{min-height:58px;border-radius:16px;box-shadow:0 5px 18px rgba(25,55,110,.08)}
+.hero-primary-actions .btn-secondary{background:linear-gradient(135deg,#edf5ff,#e5f0ff);border:1px solid #c9ddfb;color:#174ea6;font-weight:750;box-shadow:0 5px 16px rgba(37,99,235,.10)}
+.hero-primary-actions .btn-secondary:hover{background:#dcecff;border-color:#a9c9f5;color:#123f91;transform:translateY(-1px)}
+.hero-account-actions{gap:.65rem;margin-top:.1rem}
+.hero-account-actions .btn{min-height:48px;border-radius:13px;font-size:.9rem;box-shadow:none}
+.hero-account-actions .btn-outline{background:#fff;border-color:#dce5f2}
+.hero-account-actions .btn-primary{box-shadow:0 4px 12px rgba(37,99,235,.16)}
+.hero-account-actions .hero-google-button{min-height:50px;background:#fff;border:1px solid #dce5f2}
+.hero-proof{display:flex;justify-content:center;align-items:center;gap:.65rem .75rem;margin-top:1.2rem;color:#607089;font-size:.78rem}
+.hero-proof span{padding:.48rem .7rem;border:1px solid #e5ebf5;border-radius:999px;background:rgba(255,255,255,.78);white-space:nowrap}
+.hero-proof i{width:15px;height:15px;color:#315bd6}
+@media(max-width:900px){
+ .hero-actions{gap:.8rem}
+ .hero-primary-actions{gap:.7rem}
+ .hero-primary-actions .btn{min-height:56px}
+ .hero-account-actions{gap:.6rem}
+ .hero-proof{gap:.5rem;margin-top:1rem}
+ .hero-proof span{padding:.42rem .58rem;font-size:.72rem}
+}
+@media(max-width:520px){
+ .hero-primary-actions .btn{min-height:54px;font-size:.95rem}
+ .hero-account-actions .btn{min-height:46px}
+ .hero-account-actions .hero-google-button{min-height:48px}
+ .hero-proof{display:grid;grid-template-columns:1fr 1fr;justify-items:stretch;gap:.45rem}
+ .hero-proof span{justify-content:center;white-space:normal;text-align:center}
+ .hero-proof span:last-child{grid-column:1/-1;justify-self:center;min-width:52%}
+}
