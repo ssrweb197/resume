@@ -180,7 +180,7 @@
 
     <!-- PAGE 2: RESUME BUILDER -->
     <section id="page-builder" class="page-section">
-      <div class="builder-layout">
+      <div class="builder-workflow" aria-label="Resume workflow"><button type="button" class="workflow-step active" onclick="setBuilderStep(1)"><span>1</span> Sections</button><button type="button" class="workflow-step" onclick="switchPage('templates')"><span>2</span> Templates</button><button type="button" class="workflow-step" onclick="focusResumePreview()"><span>3</span> Preview</button></div><div class="builder-layout">
         <!-- Input Form Section -->
         <div class="builder-sidebar">
           <div class="builder-tabs">
@@ -479,6 +479,7 @@
       </div>
     </section>
 
+<nav class="mobile-app-nav" aria-label="Quick navigation"><button type="button" onclick="switchPage('home')"><span>⌂</span>Home</button><button type="button" onclick="switchPage('builder')"><span>✎</span>Build</button><button type="button" onclick="switchPage('templates')"><span>▤</span>Templates</button><button type="button" onclick="switchPage('dashboard')"><span>▦</span>My Resumes</button></nav>
   <!-- Authentication dialog -->
   <div class="auth-modal" id="authModal" aria-hidden="true">
     <div class="auth-backdrop" data-close-auth></div>
