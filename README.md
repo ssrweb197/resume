@@ -48,3 +48,7 @@ The builder includes five selectable layouts (Modern, Classic, Minimal, Executiv
 - `auth.js` / `firebase-config.js` — Firebase authentication setup
 - `functions/api/rewrite.js` — secure server-side AI rewrite endpoint
 - `privacy-policy.html` — privacy disclosures
+
+## Deployment note
+
+A new commit to the `main` branch triggers the connected Cloudflare Pages production deployment.
