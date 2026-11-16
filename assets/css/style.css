@@ -767,3 +767,33 @@ button:disabled{opacity:.55;cursor:not-allowed}
  .hero-account-actions .btn{font-size:.82rem}
  .hero-primary-actions .btn{min-height:52px}
 }
+
+/* Five free resume templates and responsive picker */
+.template-picker{margin:0 0 1rem;padding:1rem;border:1px solid #e3eaf5;border-radius:16px;background:#fff}
+.template-picker-heading{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:.85rem}
+.template-picker-heading strong{color:#17243b;font-size:.98rem}.template-picker-heading p{margin:.2rem 0 0;color:#71809a;font-size:.78rem}
+.free-template-tag{padding:.35rem .65rem;border-radius:999px;background:#eaf2ff;color:#2458d3;font-size:.7rem;font-weight:800;white-space:nowrap}
+.template-picker-options{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.55rem}
+.template-choice{display:flex;align-items:center;gap:.55rem;min-width:0;padding:.55rem;border:1px solid #e3eaf5;border-radius:11px;background:#fff;text-align:left;cursor:pointer;color:#26344d}
+.template-choice.active{border:2px solid #315bd6;background:#f4f7ff;padding:calc(.55rem - 1px)}
+.template-choice>span:last-child{display:flex;flex-direction:column;min-width:0}
+.template-choice strong{font-size:.76rem}.template-choice small{font-size:.65rem;color:#77849a;line-height:1.3}
+.template-swatch{display:grid;place-items:center;flex:0 0 35px;width:35px;height:43px;border:1px solid #dfe6f1;border-radius:5px;background:#fff;font-family:Georgia,serif;font-weight:800;font-size:.8rem}
+.swatch-modern{color:#315bd6;border-top:4px solid #315bd6}.swatch-classic{color:#222;border-top:4px solid #222}
+.swatch-minimal{color:#555;border:0;border-bottom:2px solid #999}.swatch-executive{color:#fff;background:#243b64;border-color:#243b64}
+.swatch-fresher{color:#087e8b;border-top:4px solid #11a4ad}
+#resume-paper.resume-template-classic{font-family:Georgia,serif;color:#202020;border-top:5px solid #222}
+#resume-paper.resume-template-classic .resume-header{text-align:center;border-bottom:1px solid #555;padding-bottom:1rem}
+#resume-paper.resume-template-classic .pv-sec-title{color:#222;border-bottom:1px solid #777;letter-spacing:.08em}
+#resume-paper.resume-template-minimal{font-family:Arial,sans-serif;border-top:0;box-shadow:none}
+#resume-paper.resume-template-minimal .resume-header{border-bottom:1px solid #e5e7eb;padding-bottom:1.2rem}
+#resume-paper.resume-template-minimal .pv-sec-title{color:#4b5563;border-bottom:1px solid #e5e7eb;font-weight:600}
+#resume-paper.resume-template-executive{border-left:7px solid #243b64}
+#resume-paper.resume-template-executive .resume-header{background:#f1f4f8;padding:1.2rem;border-radius:8px}
+#resume-paper.resume-template-executive .resume-header h1{color:#243b64}
+#resume-paper.resume-template-executive .pv-sec-title{color:#243b64;text-transform:uppercase;letter-spacing:.1em;border-bottom:2px solid #243b64}
+#resume-paper.resume-template-fresher{border-top:5px solid #0b8b96}
+#resume-paper.resume-template-fresher .resume-header h1{color:#087e8b}
+#resume-paper.resume-template-fresher .pv-sec-title{color:#087e8b;border-bottom:1px solid #b9e4e6}
+@media(max-width:760px){.template-picker-options{grid-template-columns:repeat(2,minmax(0,1fr))}.template-choice:last-child{grid-column:1/-1}}
+@media print{body *{visibility:hidden!important}#resume-paper,#resume-paper *{visibility:visible!important}#resume-paper{display:block!important;position:absolute!important;left:0!important;top:0!important;width:100%!important;max-width:none!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;box-shadow:none!important}}
