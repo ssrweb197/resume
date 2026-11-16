@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateResumeState();
   restoreResumeDraft();
   updateResumeState();
+  renderCustomResumeSections();
   selectResumeTemplate(localStorage.getItem("resumebuild-template") || "modern");
 
   const menuButton = document.getElementById("mobileMenuBtn");
@@ -75,6 +76,7 @@ function selectResumeTemplate(template) {
 }
 
 function setBuilderStep(stepIndex) {
+  document.querySelectorAll(".workflow-step").forEach((button,index)=>button.classList.toggle("active",index===0));
   document.querySelectorAll(".b-tab").forEach((tab, index) => tab.classList.toggle("active", index === stepIndex - 1));
   document.querySelectorAll(".builder-step").forEach((step, index) => step.classList.toggle("active", index === stepIndex - 1));
 }
@@ -91,6 +93,24 @@ function restoreResumeDraft() {
 function saveResumeDraft() {
   try { const data={}; RESUME_FIELD_IDS.forEach(id => { const field=document.getElementById(id); if(field) data[id]=field.value; }); localStorage.setItem(RESUME_DRAFT_KEY, JSON.stringify(data)); } catch (error) { console.warn("Resume draft save failed", error); }
 }
+
+const CUSTOM_SECTIONS_KEY="resumebuild-custom-sections-v1";
+function getCustomResumeSections(){try{return JSON.parse(localStorage.getItem(CUSTOM_SECTIONS_KEY)||"[]").filter(x=>x&&typeof x.title==="string"&&typeof x.content==="string");}catch(e){return[];}}
+function saveCustomResumeSections(items){try{localStorage.setItem(CUSTOM_SECTIONS_KEY,JSON.stringify(items));}catch(e){}}
+function renderCustomResumeSections(){
+ const list=document.getElementById("custom-section-list"),paper=document.getElementById("resume-paper");if(!list||!paper)return;
+ const items=getCustomResumeSections();list.replaceChildren();
+ items.forEach((item,index)=>{const row=document.createElement("div");row.className="custom-section-row";const label=document.createElement("span");label.textContent=item.title;const remove=document.createElement("button");remove.type="button";remove.className="btn btn-outline btn-sm";remove.textContent="Remove";remove.addEventListener("click",()=>{const next=getCustomResumeSections();next.splice(index,1);saveCustomResumeSections(next);renderCustomResumeSections();});row.append(label,remove);list.appendChild(row);});
+ paper.querySelectorAll("[data-custom-resume-section]").forEach(node=>node.remove());
+ items.forEach(item=>{const section=document.createElement("section");section.className="pv-section";section.dataset.customResumeSection="true";const title=document.createElement("h2");title.className="pv-sec-title";title.textContent=item.title;const body=document.createElement("div");body.className="pv-desc";body.textContent=item.content;section.append(title,body);paper.appendChild(section);});
+}
+function addCustomResumeSection(){
+ const title=document.getElementById("custom-section-title"),content=document.getElementById("custom-section-content");if(!title||!content)return;
+ const name=title.value.trim(),details=content.value.trim();if(!name||!details){window.alert("Enter both a section title and details.");return;}
+ const items=getCustomResumeSections();if(items.length>=8){window.alert("You can add up to 8 custom sections.");return;}
+ items.push({title:name,content:details});saveCustomResumeSections(items);title.value="";content.value="";renderCustomResumeSections();updateResumeState();
+}
+function focusResumePreview(){switchPage("builder");const paper=document.getElementById("resume-paper");paper?.scrollIntoView({behavior:"smooth",block:"start"});document.querySelectorAll(".workflow-step").forEach((b,i)=>b.classList.toggle("active",i===2));}
 
 function updateResumeState() {
   saveResumeDraft();
@@ -116,6 +136,7 @@ function updateResumeState() {
   setText("pv-school", fieldValue("input-school"), "");
   setText("pv-edu-year", fieldValue("input-edu-year"), "");
   setText("pv-degree", fieldValue("input-degree"), "");
+  renderCustomResumeSections();
   const skills = document.getElementById("pv-skills");
   if (skills) {
     skills.replaceChildren();
@@ -482,6 +503,8 @@ function exportPDF() {
 
 window.switchPage = switchPage;
 window.setBuilderStep = setBuilderStep;
+window.addCustomResumeSection = addCustomResumeSection;
+window.focusResumePreview = focusResumePreview;
 window.selectResumeTemplate = selectResumeTemplate;
 window.updateResumeState = updateResumeState;
 window.triggerAISummary = triggerAISummary;
