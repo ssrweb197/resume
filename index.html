@@ -77,7 +77,7 @@
         <button id="openSignup" class="btn btn-primary" type="button">Sign Up</button>
         <button id="logout" class="btn btn-outline" style="display:none;" type="button">Logout</button>
         <span id="userName" class="user-name"></span>
-        <button class="btn btn-primary nav-create-btn" onclick="switchPage('builder')">Build Resume</button>
+        <button class="btn btn-primary nav-create-btn" onclick="switchPage('builder-start')">Build Resume</button>
         <button id="mobileHeaderLogout" class="mobile-header-logout" type="button" style="display:none;" aria-label="Sign out">Sign Out</button>
         <button class="mobile-toggle" id="mobileMenuBtn" type="button" aria-label="Open menu" aria-expanded="false"><i data-lucide="menu"></i></button>
       </div>
@@ -98,7 +98,7 @@
             <div class="hero-actions">
               <div class="hero-primary-actions">
                 <button class="btn btn-primary btn-lg" onclick="document.getElementById('resumeUpload').click()"><i data-lucide="upload"></i> Review My Resume</button>
-                <button class="btn btn-secondary btn-lg" onclick="switchPage('builder')"><i data-lucide="file-plus-2"></i> Create a Resume</button>
+                <button class="btn btn-secondary btn-lg" onclick="switchPage('builder-start')"><i data-lucide="file-plus-2"></i> Create a Resume</button>
               </div>
               <div class="hero-account-actions">
                 <button class="btn btn-outline btn-lg" type="button" onclick="document.getElementById('openLogin').click()"><i data-lucide="log-in"></i> Login</button>
@@ -176,6 +176,34 @@
           <div><i data-lucide="file-pen-line"></i><strong>Resume builder</strong><span>Create and export a clean resume.</span></div>
         </section>
         <p class="honest-note">The automatic review is a guidance tool, not an employer ATS score or a promise of an interview. Your resume is not rewritten or sent anywhere automatically.</p>
+      </div>
+    </section>
+
+
+    <section id="page-builder-start" class="page-section">
+      <div class="container section-padding builder-start-page">
+        <div class="section-header center">
+          <span class="eyebrow">RESUMEBUILD WORKSPACE</span>
+          <h2>How would you like to build your resume?</h2>
+          <p>Start fresh with guided steps or upload an existing resume to bring your details into the builder.</p>
+        </div>
+        <div class="builder-start-options">
+          <button class="builder-start-card builder-start-new" type="button" onclick="startNewResume()">
+            <span class="builder-start-icon"><i data-lucide="file-plus-2"></i></span>
+            <span class="builder-start-badge">POPULAR</span>
+            <strong>Create a New Resume</strong>
+            <span>We’ll guide you through personal details, experience, education and skills.</span>
+            <span class="builder-start-action">Start building <i data-lucide="arrow-right"></i></span>
+          </button>
+          <button class="builder-start-card builder-start-upload" type="button" onclick="startBuilderUpload()">
+            <span class="builder-start-icon"><i data-lucide="file-up"></i></span>
+            <strong>Upload My Resume</strong>
+            <span>Import readable details from a PDF, DOCX or TXT file, then choose a new design.</span>
+            <span class="builder-start-action">Choose a file <i data-lucide="upload"></i></span>
+          </button>
+        </div>
+        <p class="builder-start-privacy"><i data-lucide="shield-check"></i> Your file is read in this browser for import. Check every extracted field before downloading.</p>
+        <p id="builderUploadStatus" class="builder-upload-status" role="status" aria-live="polite">PDF, DOCX or TXT · Maximum 8 MB</p>
       </div>
     </section>
 
@@ -364,7 +392,7 @@
     <section id="page-templates" class="page-section">
       <div class="container section-padding">
         <div class="section-header center">
-          <h2>World-Class Resume Layouts</h2>
+          <h2>World-Class Resume Layouts</h2><p><a href="#builder-start" onclick="switchPage('builder-start')">Start a new resume or upload an existing one</a></p>
           <p>Choose a layout and compare resume keywords. No template can guarantee an ATS result.</p>
         </div>
 
@@ -542,7 +570,7 @@
       </div>
       <div class="footer-links">
   <a href="#" onclick="switchPage('home')">Home</a>
-  <a href="#" onclick="switchPage('builder')">Resume Builder</a>
+  <a href="#" onclick="switchPage('builder-start')">Resume Builder</a>
   <a href="#" onclick="switchPage('templates')">Templates</a>
   <a href="#" onclick="switchPage('pricing')">Pricing</a>
   <a href="about-us.html">About Us</a>
