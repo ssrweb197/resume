@@ -1032,3 +1032,20 @@ button:disabled{opacity:.55;cursor:not-allowed}
 .hero-primary-actions .btn-primary .hero-action-subtitle{color:rgba(255,255,255,.94)}
 .hero-primary-actions .btn-secondary .hero-action-subtitle{color:#496b9d}
 @media(max-width:520px){.hero-primary-actions .hero-action-card{min-height:88px;padding:.85rem .7rem}.hero-action-title{font-size:1rem}.hero-action-subtitle{font-size:.78rem}}
+
+/* ResumeBuild: show all 15 template choices in a visible grid on mobile */
+@media(max-width:700px){
+  .template-picker{overflow:visible!important}
+  .template-picker-options{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    overflow:visible!important;
+    gap:.55rem!important;
+    padding-bottom:0!important;
+  }
+  .template-choice{min-width:0!important;width:100%;padding:.5rem!important;gap:.4rem!important}
+  .template-choice strong{font-size:.72rem}
+  .template-choice small{font-size:.61rem}
+  .template-swatch{flex-basis:30px;width:30px;height:38px}
+  .template-choice:last-child{grid-column:auto!important}
+}
