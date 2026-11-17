@@ -552,8 +552,27 @@ function runATSCheck() {
 function triggerAISummary() {
   window.alert("AI writing assistance is not connected yet. The resume review currently provides checklist and keyword suggestions only.");
 }
+function getFreeDownloadCount() {
+  try { return Math.max(0, Number(localStorage.getItem("resumebuild-free-download-count") || 0)); }
+  catch (error) { return 0; }
+}
+function canUseFreeDownload() {
+  const used = getFreeDownloadCount();
+  if (used >= 5) {
+    window.alert("You have used all 5 free downloads on this browser. More downloads will be available with a future Premium plan.");
+    return false;
+  }
+  return true;
+}
+function recordFreeDownload() {
+  try {
+    const used = getFreeDownloadCount();
+    localStorage.setItem("resumebuild-free-download-count", String(used + 1));
+  } catch (error) {}
+}
 function exportWord() {
   if (!fieldValue("input-fullname")) { window.alert("Please enter your name before exporting your resume."); document.getElementById("input-fullname")?.focus(); return; }
+  if (!canUseFreeDownload()) return;
   const paper = document.getElementById("resume-paper"); if (!paper) return;
   const clone = paper.cloneNode(true); clone.querySelectorAll("[hidden]").forEach(node => node.remove());
   const styles = "<style>body{font-family:Arial,sans-serif;color:#202b3c;line-height:1.45}h1{font-size:24pt;margin:0 0 5pt}h2{font-size:12pt;border-bottom:1px solid #bbb;margin:16pt 0 6pt}p{white-space:pre-wrap}.pv-tag{display:inline-block;margin:2pt 5pt 2pt 0;padding:2pt 5pt;border:1px solid #ddd}</style>";
@@ -561,10 +580,12 @@ function exportWord() {
   const blob = new Blob(["\ufeff", html], { type: "application/msword" });
   const url = URL.createObjectURL(blob); const link = document.createElement("a"); link.href = url;
   link.download = (fieldValue("input-fullname").replace(/[^a-z0-9-_]+/gi, "-") || "resume") + ".doc";
-  document.body.appendChild(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+  document.body.appendChild(link); link.click(); link.remove(); recordFreeDownload(); setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 function exportPDF() {
   if (!fieldValue("input-fullname")) { window.alert("Please enter your name before exporting your resume."); document.getElementById("input-fullname")?.focus(); return; }
+  if (!canUseFreeDownload()) return;
+  recordFreeDownload();
   window.print();
 }
 
