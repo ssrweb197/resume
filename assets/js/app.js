@@ -173,6 +173,19 @@ function updateResumeState() {
   setText("pv-phone", fieldValue("input-phone"), "");
   setText("pv-location", fieldValue("input-location"), "");
   setText("pv-links", fieldValue("input-links"), "");
+  const contactParts = [
+    ["pv-email", "input-email"],
+    ["pv-phone", "input-phone"],
+    ["pv-location", "input-location"],
+    ["pv-links", "input-links"]
+  ];
+  contactParts.forEach(([previewId, inputId], index) => {
+    const value = fieldValue(inputId);
+    const separator = document.getElementById(index === 1 ? "pv-email-separator" : index === 2 ? "pv-phone-separator" : index === 3 ? "pv-links-separator" : "");
+    if (separator) separator.hidden = !value || !contactParts.slice(0,index).some(([,priorId]) => fieldValue(priorId));
+  });
+  const contact = document.getElementById("pv-contact");
+  if (contact) contact.hidden = !contactParts.some(([,inputId]) => fieldValue(inputId));
   const projects = document.getElementById("pv-projects");
   const projectSection = document.getElementById("pv-projects-section");
   if (projects) projects.textContent = fieldValue("input-projects");
