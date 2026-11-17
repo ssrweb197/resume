@@ -1083,3 +1083,85 @@ button:disabled{opacity:.55;cursor:not-allowed}
   #resume-paper .pv-sec-title{font-size:.92rem}
   #resume-paper .pv-desc{font-size:.82rem}
 }
+
+/* Mobile live-preview fit: keep the complete resume page inside the phone viewport */
+@media screen and (max-width:700px){
+  .builder-preview-wrapper{
+    display:block!important;
+    width:100%!important;
+    min-width:0!important;
+    padding:12px 10px 24px!important;
+    overflow-x:hidden!important;
+    box-sizing:border-box!important;
+  }
+  .builder-preview-wrapper .preview-toolbar{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    box-sizing:border-box!important;
+  }
+  .builder-preview-wrapper .toolbar-actions{
+    display:flex!important;
+    flex-wrap:wrap!important;
+    width:100%!important;
+    max-width:100%!important;
+    gap:8px!important;
+  }
+  .builder-preview-wrapper .toolbar-actions .btn{
+    flex:0 1 auto!important;
+    min-width:0!important;
+    max-width:100%!important;
+    white-space:normal!important;
+    font-size:14px!important;
+    padding:10px 12px!important;
+  }
+  #resume-paper,
+  #resume-paper *{
+    box-sizing:border-box!important;
+    min-width:0!important;
+    max-width:100%!important;
+  }
+  #resume-paper{
+    display:block!important;
+    width:100%!important;
+    min-width:0!important;
+    max-width:100%!important;
+    margin:0 auto!important;
+    padding:20px 16px!important;
+    overflow:hidden!important;
+  }
+  #resume-paper .resume-header{
+    width:100%!important;
+    padding:14px!important;
+    overflow-wrap:anywhere!important;
+  }
+  #resume-paper .resume-header h1{
+    font-size:clamp(25px,7vw,34px)!important;
+    line-height:1.15!important;
+    overflow-wrap:anywhere!important;
+  }
+  #resume-paper .pv-title{
+    font-size:clamp(16px,4.5vw,21px)!important;
+    line-height:1.3!important;
+    overflow-wrap:anywhere!important;
+  }
+  #resume-paper .pv-contact,
+  #resume-paper .pv-contact span{
+    font-size:12px!important;
+    line-height:1.5!important;
+    overflow-wrap:anywhere!important;
+    word-break:break-word!important;
+  }
+  #resume-paper .pv-sec-title{
+    font-size:clamp(14px,3.8vw,17px)!important;
+    line-height:1.25!important;
+    letter-spacing:.035em!important;
+    overflow-wrap:anywhere!important;
+  }
+  #resume-paper .pv-desc,
+  #resume-paper .pv-section,
+  #resume-paper .pv-flex-between{
+    overflow-wrap:anywhere!important;
+    word-break:break-word!important;
+  }
+}
