@@ -1049,3 +1049,37 @@ button:disabled{opacity:.55;cursor:not-allowed}
   .template-swatch{flex-basis:30px;width:30px;height:38px}
   .template-choice:last-child{grid-column:auto!important}
 }
+
+/* ResumeBuild: clear full-page A4 live preview for the selected template */
+#resume-paper{
+  box-sizing:border-box;
+  width:100%;
+  max-width:794px;
+  min-height:1123px;
+  margin:0 auto;
+  background:#fff;
+  transition:background-color .18s ease,border-color .18s ease,box-shadow .18s ease;
+}
+#resume-paper.resume-template-modern{
+  border-top:6px solid #315bd6;
+  box-shadow:0 12px 32px rgba(30,64,120,.12);
+}
+#resume-paper.resume-template-modern .resume-header h1{color:#172b4d}
+#resume-paper.resume-template-modern .pv-sec-title{
+  color:#2458b8;
+  border-bottom:2px solid #dbe7ff;
+}
+@media(max-width:700px){
+  .builder-preview-wrapper{padding:1rem .55rem!important;overflow-x:hidden}
+  #resume-paper{
+    width:100%!important;
+    max-width:100%!important;
+    min-height:1123px;
+    padding:1.25rem!important;
+    border-radius:6px;
+  }
+  #resume-paper .resume-header h1{font-size:1.65rem}
+  #resume-paper .pv-title{font-size:1rem}
+  #resume-paper .pv-sec-title{font-size:.92rem}
+  #resume-paper .pv-desc{font-size:.82rem}
+}
