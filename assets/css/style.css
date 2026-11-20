@@ -1165,3 +1165,42 @@ button:disabled{opacity:.55;cursor:not-allowed}
     word-break:break-word!important;
   }
 }
+
+/* Animated phone resume showcase */
+.resume-showcase{position:relative;overflow:hidden;padding:clamp(48px,7vw,88px) 22px;background:linear-gradient(135deg,#f5f8ff 0%,#fff 55%,#effaff 100%)}
+.resume-showcase-inner{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:40px}
+.resume-showcase-copy{max-width:470px}
+.resume-showcase-copy h2{font-size:clamp(2rem,4vw,3.2rem);line-height:1.08;letter-spacing:-.04em;margin:14px 0}
+.resume-showcase-copy h2 span{color:var(--primary)}
+.resume-showcase-copy p{font-size:1.05rem;color:var(--text-muted);margin-bottom:24px}
+.resume-phone-stage{min-height:490px;display:flex;justify-content:center;align-items:center;position:relative;isolation:isolate}
+.resume-phone-glow{position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(37,99,235,.18),rgba(6,182,212,.08) 55%,transparent 72%);z-index:-1}
+.resume-phone{width:248px;height:450px;padding:11px;border:7px solid #172033;border-radius:38px;background:#111827;box-shadow:0 24px 55px rgba(15,23,42,.23),inset 0 0 0 2px #64748b;position:relative;transform:rotate(-3deg)}
+.resume-phone-screen{height:100%;border-radius:23px;background:#f8fafc;overflow:hidden;padding:26px 12px 12px;position:relative}
+.resume-phone-speaker{position:absolute;z-index:2;top:10px;left:50%;transform:translateX(-50%);width:76px;height:13px;border-radius:12px;background:#111827}
+.resume-phone-home{position:absolute;bottom:7px;left:50%;transform:translateX(-50%);width:42px;height:4px;border-radius:5px;background:#cbd5e1}
+.phone-resume-sheet{background:white;min-height:400px;padding:13px 10px;box-shadow:0 3px 12px rgba(15,23,42,.12);animation:resume-sheet-slide 7s ease-in-out infinite}
+.phone-resume-top{display:flex;align-items:center;gap:8px;border-bottom:2px solid #2563eb;padding-bottom:10px}
+.phone-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#2563eb,#06b6d4);color:white;display:grid;place-items:center;font-size:10px;font-weight:800}
+.phone-resume-top b{display:block;font-size:10px;color:#172033}.phone-resume-top small{display:block;font-size:7px;color:#64748b}
+.phone-resume-contact{font-size:6px;color:#64748b;padding:8px 0}
+.phone-resume-heading{font-size:8px;font-weight:800;letter-spacing:.1em;color:#2563eb;margin:12px 0 6px;border-bottom:1px solid #dbeafe;padding-bottom:3px}
+.phone-line{height:4px;background:#d8e0eb;border-radius:4px;width:82%;margin:5px 0}.phone-line.long{width:100%}.phone-line.medium{width:66%}.phone-line.short{width:42%}
+.phone-resume-role{font-size:7px;font-weight:700;color:#334155}
+.phone-skill-pills{display:flex;gap:5px;margin-top:7px}.phone-skill-pills i{width:38px;height:12px;border-radius:8px;background:#eaf1ff}
+@keyframes resume-sheet-slide{0%,12%{transform:translateY(0)}45%,60%{transform:translateY(-24px)}88%,100%{transform:translateY(0)}}
+.resume-float-tag{position:absolute;right:0;bottom:75px;background:#fff;color:#2563eb;padding:11px 15px;border-radius:14px;box-shadow:0 10px 30px rgba(15,23,42,.12);display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700}
+.resume-float-spark{position:absolute;top:55px;right:16%;font-size:32px;color:#06b6d4;animation:resume-spark-float 4s ease-in-out infinite}
+@keyframes resume-spark-float{50%{transform:translateY(-12px) rotate(18deg)}}
+.company-marquee-section{padding:42px 0 30px;background:#fff;overflow:hidden}
+.company-marquee-heading{text-align:center;padding:0 20px 22px}
+.company-marquee-heading h2{font-size:clamp(1.25rem,3vw,1.8rem);margin-top:8px}
+.company-marquee{overflow:hidden;position:relative;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.company-marquee-track{display:flex;align-items:center;gap:clamp(34px,6vw,82px);width:max-content;animation:company-marquee-scroll 32s linear infinite}
+.company-marquee-track span{font-size:clamp(1.1rem,2.5vw,1.7rem);font-weight:800;letter-spacing:-.04em;color:#64748b;white-space:nowrap;opacity:.9}
+.company-marquee-track span:nth-child(3n){color:#2563eb}
+.company-marquee:hover .company-marquee-track{animation-play-state:paused}
+.company-marquee-note{text-align:center;color:#94a3b8;font-size:11px;margin-top:14px}
+@keyframes company-marquee-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(max-width:760px){.resume-showcase{padding:42px 20px 30px}.resume-showcase-inner{grid-template-columns:1fr;gap:10px;text-align:center}.resume-showcase-copy{margin:0 auto}.resume-showcase-copy p{font-size:14px}.resume-phone-stage{min-height:450px}.resume-phone{transform:rotate(-2deg) scale(.92)}.resume-float-tag{right:2%;bottom:45px}.resume-float-spark{right:10%;top:30px}.company-marquee-section{padding-top:32px}}
+@media(prefers-reduced-motion:reduce){.phone-resume-sheet,.resume-float-spark,.company-marquee-track{animation:none}}
